@@ -196,11 +196,12 @@ g <- ggsurvplot_facet(
     breaks = levels
   ) +
   # to plot internal XY axes
-  annotate("segment", x = -Inf, xend = -Inf, y = -Inf, yend =  1,
-           linewidth = 0.5) +                         # y-axis, left edge
-  annotate("segment", x = -Inf, xend =  Inf, y = -Inf, yend = -Inf,
-           linewidth = 0.5) +                          # x-axis, bottom edge
-  coord_cartesian(clip = "off")
+ facet_grid(
+  rows = vars(.data[[var1]]),
+  cols = vars(.data[[var2]]),
+  axes        = "all",
+  axis.labels = "margins"
+)
 
 g
 ```
@@ -230,7 +231,13 @@ g <- ggsurvplot_facet(
     name   = "Replicate",
     limits = levels,
     breaks = levels
-  )
+  ) +
+ facet_grid(
+  rows = vars(.data[[var1]]),
+  cols = vars(.data[[var2]]),
+  axes        = "all",
+  axis.labels = "margins"
+)
 
 g
 ```

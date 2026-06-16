@@ -10,8 +10,6 @@ output:
     highlight: haddock
 ---
 
----
-
 ## 4A. Setting up
 
 ### Computing tools
@@ -61,7 +59,7 @@ knitr::opts_chunk$set(
 
 We are not statisticians, so the analyses illustrated here are not very
 sophisticated. However, you should be somewhat familiar with:
-- Kaplan-Meier (KM) plots
+- [Kaplan-Meier](https://rmvpaeme.github.io/KaplanMeier_intro/) [(KM) plots](pmc.ncbi.nlm.nih.gov/articles/PMC5045282/pdf/jadp-07-091.pdf)
 - [Cox-proportional hazards (CPH) modelling](http://www.sthda.com/english/wiki/cox-proportional-hazards-model)
 - and [CPH model assumptions](http://www.sthda.com/english/wiki/cox-model-assumptions)
 
@@ -80,14 +78,174 @@ Our steps will be:
 - Perform CPH modelling for replicates, experimental variables and their interactions.
 - Check that the assumptions of the CPH model hold.
 
-## 4B. Loading the data
+## 4B. Initial inspection of the data
 
+### Loading the data
 
-```{r,  echo = FALSE, message = FALSE, warning = FALSE}
-filepath <- file.path('/Users/JQ/Documents/__REPOS/GitHub/Survival_functions',
-                      'Infection_data_example.xlsx')
-data <- analyse_spreadsheet(filepath, cph=TRUE)
+The [last (3^rd^) Jupyter python notebook](./03_Read_DataSheets.html) produces an XLSX file whose `Observations_analysis` spreadsheet will contain the events (deaths, censorings) ready for analysis with _survival_ in the form:
+
+ Day_no. | Rack_no. | Tube_no. | genotype | treatment | Event_code
+---------|----------|----------|----------|-----------|------------
+    1    |     1    |    1     | wild-type|    mock   | 1 _(death)_
+    1    |     1    |    2     | wild-type|    mock   | 0 _(censor)_
+
+You will find this file in:
 ```
+your-home-directory/
+ └──Drosben_userdata/
+    └──experiments_data/
+       └──02.02.2022_Effect-of-myfavouritegene-on-lifespan_bd8b2f79/
+          └──bd8b2f79_observations.xlsx
+```
+```{r,  echo = FALSE, message = FALSE, warning = FALSE}
+# This code block allows you to find the file interactively
+#filepath <- file.choose()
+filepath <- file.path(
+  "/Users/JQ",
+  "Drosben_userdata/experiments_data",
+  "02.02.2022_Effect-of-myfavouritegene-on-lifespan_bd8b2f79/bd8b2f79_observations.xlsx"
+  )
+survdata <- read_excel(filepath, sheet = 'Observations_analysis')
+head(survdata)
+```
+The column names of this dataframe are fixed, except for the variable names, which are decided by the user in the [first Jupyter noteboook](./01_First_Use_Colour_Calibration.html). We could obtain them from the `experimentID_infodict.xlsx` file, but it is easier to do:
+```{r}
+fixed_colnames <- c("Day_no.", "Rack_no.", "Tube_no.", "Event_code")
+var_names <- !(colnames(survdata) %in% fixed_colnames)
+vars <- setdiff(colnames(survdata), fixed_colnames)
+var1 <- vars[[1]]
+var2 <- vars[[2]]
+vars
+```
+
+In the example, the specimens are organised like this:
+
+Stratum no. | Variable levels   | Rack_no. | Tube_nos. | Replicates
+------------|-------------------|----------|-----------|----------------------
+     1      |wild-type, mock    |     1    |    1-12   | rack 1, tubes 1 - 12
+     2      | _mfg^1^_, mock    |     2    |    1-12   | rack 2, tubes 1 - 12
+     3      |wild-type, treated |     3    |    1-12   | rack 3, tubes 1 - 12
+     4      | _mfg^1^_, treated |     4    |    1-12   | rack 4, tubes 1 - 12
+
+So, the replicate could be equated to the `Tube_no.`.
+However, the user has the flexibility to organise this in any other way, for instance:
+
+Stratum no. | Variable levels   | Rack_no. | Tube_nos. | Replicates
+------------|-------------------|----------|-----------|----------------------
+     1      |wild-type, mock    |     1    |    1-6    | rack 1, tubes 1 - 6
+            |                   |     2    |    1-6    | rack 2, tubes 1 - 6
+------------|-------------------|----------|-----------|----------------------
+     2      | _mfg^1^_, mock    |     1    |    7-12   | rack 1, tubes 7 - 12
+            |                   |     2    |    7-12   | rack 2, tubes 7 - 12
+------------|-------------------|----------|-----------|----------------------
+     3      |wild-type, treated |     3    |    1-6    | rack 3, tubes 1 - 6
+            |                   |     4    |    1-6    | rack 4, tubes 1 - 6
+------------|-------------------|----------|-----------|----------------------
+     4      | _mfg^1^_, treated |     3    |    7-12   | rack 3, tubes 7 - 12
+            |                   |     4    |    7-12   | rack 4, tubes 7 - 12
+------------|-------------------|----------|-----------|----------------------
+
+Or even more complicated arrangements, like each Stratum occupying 3 tubes in each of the 4 racks—maybe not even the same tube numbers in each rack. To ensure _any_ arrangement of replicates (the distinct physical tubes) is captured, we do:
+```{r,  echo = FALSE, message = FALSE, warning = FALSE}
+rep_key <- survdata %>%
+  distinct(.data[[var1]], .data[[var2]], `Rack_no.`, `Tube_no.`) %>%
+  arrange(.data[[var1]], .data[[var2]], `Rack_no.`, `Tube_no.`) %>%
+  group_by(.data[[var1]], .data[[var2]]) %>%
+  mutate(replicate = row_number()) %>%
+  ungroup()
+
+survdata <- survdata %>%
+  left_join(rep_key, by = c(var1, var2, "Rack_no.", "Tube_no.")) %>%
+  select(!c(`Rack_no.`, `Tube_no.`)) %>%
+  rename(
+    event = Event_code,
+    day   = `Day_no.`)
+
+head(survdata)
+```
+
+### Analysis of replicates
+
+To ensure consistency of behaviour of within replicates, we subset the data:
+
+```{r}
+# replicate as a factor → discrete colours + a clean legend
+levels <- as.character(sort(unique(as.integer(as.character(survdata$replicate)))))
+survdata$replicate <- factor(survdata$replicate, levels = levels)
+
+fit <- survfit(Surv(time = day, event = event) ~ replicate, data = survdata)
+
+g <- ggsurvplot_facet(
+  fit, survdata,
+  facet.by      = c(var1, var2),   # one panel per stratum (var1/var2 are strings)
+  axis.labels   = "all",
+  color         = "replicate",     # colour each replicate to spot outliers
+  conf.int      = FALSE,           # keep curves clean, like the base-R version
+  censor        = TRUE,            # + censoring marks
+  break.time.by = 20,              # tick spacing, echoing axis(seq(10,90,20))
+  xlab          = "Lifespan (days)",
+  ylab          = "Survival probability",
+  short.panel.labs = TRUE,         # panel strips show just the level
+  ggtheme       = theme_classic()  # minimal, base-R-like: axis lines, no grid
+) +
+  # to control the order of colours and replicate number
+  scale_colour_manual(
+    values = brewer.pal(12, "Paired"),
+    name   = "Replicate",
+    limits = levels,
+    breaks = levels
+  ) +
+  # to plot internal XY axes
+  annotate("segment", x = -Inf, xend = -Inf, y = -Inf, yend =  1,
+           linewidth = 0.5) +                         # y-axis, left edge
+  annotate("segment", x = -Inf, xend =  Inf, y = -Inf, yend = -Inf,
+           linewidth = 0.5) +                          # x-axis, bottom edge
+  coord_cartesian(clip = "off")
+
+g
+```
+
+From this, we might want to remove replicate #2 of the _mfg^1^_, mock stratum, as there is full mortality beforre day 40. However, this is likely due to a large amount of censoring at around day 20, followed by the death of one or two individuals left in the tube (see [Jupyter notebook #3](./03_Read_DataSheets.html), section 3C). This will likely have no impact on the final result, but we might just as well eliminate this replicate:
+```{r}
+survdata_filt <- survdata %>%
+  filter_out(.data[[var1]]=='mfg[1]' & .data[[var2]]=='mock' & replicate==2)
+
+fit <- survfit(Surv(time = day, event = event) ~ replicate, data = survdata_filt)
+
+g <- ggsurvplot_facet(
+  fit, survdata_filt,
+  facet.by      = c(var1, var2),   # one panel per stratum (var1/var2 are strings)
+  axis.labels   = "all",
+  color         = "replicate",     # colour each replicate to spot outliers
+  conf.int      = FALSE,           # keep curves clean, like the base-R version
+  censor        = TRUE,            # + censoring marks
+  break.time.by = 20,              # tick spacing, echoing axis(seq(10,90,20))
+  xlab          = "Lifespan (days)",
+  ylab          = "Survival probability",
+  short.panel.labs = TRUE,         # panel strips show just the level
+  ggtheme       = theme_classic()  # minimal, base-R-like: axis lines, no grid
+) +
+  scale_colour_manual(
+    values = brewer.pal(12, "Paired"),
+    name   = "Replicate",
+    limits = levels,
+    breaks = levels
+  )
+
+g
+```
+While replicates #1 for both treatments in _mfg^1^_ individuals seem to be outliers, they are not fundamentally different and I will keep them.
+
+
+## 4C. Effect on survival of `r var1`, `r var2` or their interaction
+
+
+
+
+
+
+
+
 
 
 
@@ -116,18 +274,21 @@ g <- ggsurvplot(surv_fit(Surv(hour, event) ~ genotype + treatment,
 #### To prepare the legend:
 
 Let's have a look at our strata (by default organised as `genotype:treatment` in alphabetical order): 
-```{r,  echo = FALSE, message = FALSE, warning = FALSE}
+```
+{r,  echo = FALSE, message = FALSE, warning = FALSE}
 levels(g$data.survtable$strata)
 ```
 But I'd like to present the strata as here:
-```{r,  echo = FALSE, message = FALSE, warning = FALSE}
+```
+{r,  echo = FALSE, message = FALSE, warning = FALSE}
 exgrid <- expand.grid(unique(sort(data$genotype, decreasing = TRUE)),
                       unique(sort(data$treatment, decreasing = TRUE)))
 exgrid <- exgrid[order(exgrid$Var2),]
 lab_strata <- paste(exgrid$Var1, exgrid$Var2, sep=" | ")
 lab_strata
 ```
-```{r}
+```
+{r}
 lab_strata <- c("*myoIA>ctrl^KD^* | Sucrose",
                 "*myoIA>Etl1^KD^* | Sucrose",
                 "*ken^1^* | Sucrose",
@@ -138,7 +299,8 @@ lab_strata
 ```
 to match the colours and the line types like this:
 
-```{r,  echo = FALSE, message = FALSE, warning = FALSE, fig.height = 1, fig.width=2.5}
+```
+{r,  echo = FALSE, message = FALSE, warning = FALSE, fig.height = 1, fig.width=2.5}
 x <- rep(c(1:20), 6)
 variable <- unlist(lapply(lab_strata, rep, 20))
 value <- c( 5+rnorm(20)/5, 4+rnorm(20)/5, 3+rnorm(20)/5,
@@ -155,17 +317,20 @@ d
 ```
 
 To match what we want, the order of the legends, colours and line types should be like:
-```{r,  echo = FALSE, message = FALSE, warning = FALSE}
+```
+{r,  echo = FALSE, message = FALSE, warning = FALSE}
 lab_strata[c(1,3,2,4,6,5)]
 ```
 And the reverse order would be:
-```{r,  echo = FALSE, message = FALSE, warning = FALSE}
+```
+{r,  echo = FALSE, message = FALSE, warning = FALSE}
 l <- levels(g$data.survtable$strata)[c(6,2,4,5,1,3)]
 l
 ```
 Now we can start with the preliminary plot:
 
-```{r,  echo = FALSE, message = FALSE, warning = FALSE, fig.height = 3, fig.width=5}
+```
+{r,  echo = FALSE, message = FALSE, warning = FALSE, fig.height = 3, fig.width=5}
 g$plot +
   scale_colour_manual(name='', breaks=l, values=palette,
                       labels=lab_strata[c(1,3,2,4,6,5)],

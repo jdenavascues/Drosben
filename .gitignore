@@ -1,0 +1,76 @@
+# Python cache / artifacts
+# --------------------------
+*__pycache__/
+*.py[cod]
+*.so
+*.pyd
+*.pyo
+*.pyc
+*_cache/
+
+# Build system outputs
+# --------------------------
+*.egg-info/
+*.egg
+dist/
+build/
+wheels/
+pip-wheel-metadata/
+
+# Virtual environments
+# --------------------------
+.venv/
+venv/
+env/
+.env/
+conda_env/
+conda_build/
+
+# Jupyter notebooks
+# --------------------------
+.ipynb_checkpoints/
+*.ipynb_out/
+**/.ipynb_checkpoints
+.lab/
+*.nbconvert.ipynb
+
+# Dataset / large files
+# --------------------------
+*.tif
+*.tiff
+*.jpg
+*.jpeg
+*.pdf
+*.xlsx
+!src/drosben/resources/*
+!tests/data/datasheet_scans/*
+!tests/data/*
+!img/*
+
+# Editor
+# --------------------------
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+# --------------------------
+.DS_Store
+Thumbs.db
+
+# Logs
+# --------------------------
+*.log
+
+# conda-lock artifacts
+# --------------------------
+*.conda-lock
+*.lock
+
+# Misc
+# --------------------------
+*.tmp
+*.bak*
+.Rhistory
+*.pyc

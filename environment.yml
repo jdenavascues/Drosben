@@ -1,0 +1,33 @@
+name: drosbenV
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.11
+  - numpy
+  - scipy
+  - pandas
+  - scikit-image
+  - scikit-learn
+  - pillow
+  - imageio
+  - opencv
+  - zxing-cpp
+  - matplotlib
+  - seaborn
+  - lifelines
+  - pyqrcode
+  - reportlab
+  - pypdf
+  - xlsxwriter
+  - openpyxl
+  - jupyterlab
+  - ipywidgets
+  - ipykernel
+  - pip
+  - pip:
+      - pymupdf
+  # optional dev tooling (nice to have)
+  - black
+  - ruff
+  - pytest

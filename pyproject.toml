@@ -1,0 +1,120 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "drosben"
+version = "0.1.0"
+description = "Drosben: A system for efficient Drosophila lifespan experiments"
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [
+  { name = "Joaquín de Navascués", email = "j.denavascues@essex.ac.uk" },
+  { name = "Terrence Mark Trinca", email =  "terrence.trinca@bristol.ac.uk" }
+]
+maintainers = [
+  { name = "Joaquín de Navascués", email = "j.denavascues@essex.ac.uk" }
+]
+license = { text = "MIT" }
+keywords = ["Drosophila", "lifespan", "image-processing"]
+
+dependencies = [
+  "numpy>=1.24",
+  "scipy",
+  "scikit-image>=0.21",
+  "scikit-learn",
+  "pandas>=1.5",
+  "imageio",
+  "pillow>=10.0",
+  "matplotlib>=3.7",
+  "seaborn",
+  "lifelines",
+  # output
+  "pymupdf>=1.24",              # PyMuPDF (import as `fitz` or `pymupdf`)
+  "reportlab",
+  "pyqrcode",
+  "opencv-python",
+  "xlsxwriter",
+  "openpyxl",
+  # UI
+  "ipywidgets>=8.0",            # for notebooks
+  "jupyterlab>=4.0",            # optional but commonly needed with widgets
+  "ipykernel",
+]
+
+[project.optional-dependencies]
+dev = [
+  "black>=24.1.0",
+  "ruff>=0.4.0",
+  "pytest>=7.4",
+  "mypy>=1.7.0",
+  "build>=1.0.0",
+  "twine>=4.0.2",
+  "pre-commit>=3.6.0",
+  "conda-lock",
+  "pip"
+]
+notebooks = [
+  "ipyfilechooser>=0.6.0",
+  "ipympl>=0.9.3"
+]
+viz = [
+  "seaborn>=0.13.0",
+  "plotly>=5.18.0"
+]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+"drosben.resources" = ["*"]
+
+[project.urls]
+Homepage = "https://github.com/jdenavascues/Drosben"
+Issues = "https://github.com/jdenavascues/Drosben/issues"
+
+[tool.black]
+line-length = 100
+target-version = ["py310", "py311", "py312"]
+include = "\\.pyi?$"
+exclude = """
+/(
+    \\.git
+  | \\.mypy_cache
+  | \\.ruff_cache
+  | \\.venv
+  | build
+  | dist
+)/
+"""
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+lint.extend-select = [
+  "E", "F",      # pycodestyle/pyflakes
+  "I",           # isort
+  "W",           # warnings
+  "UP",          # pyupgrade
+  "B",           # bugbear
+  "SIM",         # flake8-simplify
+]
+lint.ignore = [
+  "E501"         # let black handle line wrapping
+]
+src = ["src", "tests"]
+exclude = [".git", ".venv", "build", "dist"]
+
+[tool.ruff.isort]
+known-first-party = ["drosben"]
+combine-as-imports = true
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+addopts = "-ra -q"
+testpaths = ["tests"]
+pythonpath = ["src"]

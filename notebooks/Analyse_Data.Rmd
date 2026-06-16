@@ -1,0 +1,270 @@
+---
+title: "Survival analysis of Drosophila survival data"
+author: "Created by Trinca & deNavascues"
+date: "Generated on `r format(Sys.time(), '%d %B, %Y')`"
+output:
+  html_document:
+    theme: united
+    toc: yes
+  pdf_document: default
+  word_document:
+    toc: yes
+params:
+  text1: sthda_modelling
+  link1: "http://www.sthda.com/english/wiki/cox-proportional-hazards-model"
+  text2: Survival
+  link2: "https://cran.r-project.org/web/packages/survival/survival.pdf"
+  text3: Survminers
+  link3: "https://cran.r-project.org/web/packages/survminer/survminer.pdf"
+  text4: sthda_assumptions
+  link4: "http://www.sthda.com/english/wiki/cox-model-assumptions"
+---
+
+```{r, echo=FALSE}
+# Function to add hyperlink 
+myFun <- function(text, link, inline=TRUE) {
+  if(inline) {
+    paste("[", text, "](", link, ")", sep="")
+  } else {
+    cat("[", text, "](", link, ")", sep="")
+  }
+}
+
+#Color Format
+colFmt = function(x,color){
+  outputFormat = knitr::opts_knit$get("rmarkdown.pandoc.to")
+  if(outputFormat == 'latex')
+    paste("\\textcolor{",color,"}{",x,"}",sep="")
+  else if(outputFormat == 'html')
+    paste("<font color='",color,"'>",x,"</font>",sep="")
+  else
+    x
+}
+
+```
+---
+
+#About this document
+
+Please use caution when using this documnet, it was created by biologists as oppose to statisitician, and therefore inteprete at your own risk.
+
+This document will use Kaplan-Meier (KM) plots to visualise and Cox Proportional Hazard (CoxPH) modelling to analyse datasets. First it will check for equal distribution of replicates within each cohort and will suggest triming of outlier replicates if needed, it will then generate a CoxPH which will model each replicate, followed by modelling interactions between models. Finally, the assumptions of CoxPH modelling will be tested. Detailed explanations on how to best inteprete statsitical and graphical outputs can be found in section - Results in more detail.
+
+
+**`r colFmt("Caution -",'red')`** this documment assumes that the experimental is well versed in suvival data types, e.g. censoring. If this is not the case then a detailed explanation of CoxPH modelling and its implementation in R can be found at `r myFun(params$text1, params$link1)`. The two main R packages which this script depends on are `r myFun(params$text2, params$link2)` (Therneau, T.M, 2019) and `r myFun(params$text3, params$link3)` (Kassambara, A, 2019).
+
+---
+
+#Summary of Results
+
+##Dataset
+
+```{r, echo=FALSE}
+library(readxl)
+LifespanData <- read_excel(file.choose())
+head(LifespanData)
+
+```
+
+The dataset contains data for `r ncol(LifespanData)-2` variables. Variables include: `r colnames(LifespanData[3])`, `r colnames(LifespanData[4])`, `r colnames(LifespanData[5])`.
+
+**Note -** Please ensure correct ordering of columns as follows; column 1 = Day, column 2 = Event, column 3 = Replicate, column 4 = Variable 1, column 5 = Variable 2.
+
+##Replicates
+
+Data is subsetted to analyse replicates of individual cohorts.
+
+```{r, echo=FALSE}
+library(ggplot2)
+library(magrittr)
+library(ggpubr)
+library(survival)
+library(survminer)
+
+
+for(level1 in unique(LifespanData$Dose)){
+  for(level2 in unique(LifespanData$Genotype)){
+    SubsetData <- LifespanData[LifespanData$Dose ==  level1 & LifespanData$Genotype ==  level2,]
+    #Plotting KM curve
+    myfit<-survfit(Surv(time=Day, event = Event)~Replicate, data=SubsetData)
+    title = paste("Replicates for: Variable_1 -",level1," and Variable_2 -",level2)
+    plot(myfit, lty=c('solid'),lwd=2, main =title)
+    lLab <- gsub("x=","",names(myfit$strata))
+    legend("bottomleft", legend=lLab,lty=c('solid'), horiz=FALSE, bty='n')
+    title(xlab=bquote("Lifespan (Days)"), ylab="Survival function") 
+    axis(1, at=seq(10 , 90, by=20), lwd=0, lwd.ticks=1)}
+}
+
+```
+
+##Analysing variables - `r colnames(LifespanData[4])` and `r colnames(LifespanData[5])`
+
+This contains CoxPH analysis of variables, interactions (significant or not, it will state), and tests for the assumptions of the CoxPH model.
+
+###CoxPH model
+
+```{r, echo=FALSE}
+
+mySurv<-Surv(time=LifespanData$Day, event = LifespanData$Event)
+myfit<-survfit(mySurv~LifespanData$Genotype+LifespanData$Dose)
+myfit
+plot(myfit, col=c("orange","blue"), lty=c('solid','solid','twodash','twodash'),lwd=2)
+lLab <- gsub("x=","",names(myfit$strata))
+#legend("bottomleft", legend=lLab, col=c("orange","blue"),lty=c('solid','solid','twodash','twodash'), horiz=FALSE, bty='n')
+#abline(h=0.5)
+title(xlab=bquote("Lifespan (Days" ~italic(post)~ "Treatment)"), ylab="Survival function") 
+axis(1, at=seq(10 , 90, by=20), lwd=0, lwd.ticks=1)
+
+
+plot(myfit, col=c("orange","blue"), lty=c('solid','solid','twodash','twodash'),lwd=2)
+lLab <- gsub("x=","",names(myfit$strata))
+legend("bottomleft", legend=lLab, col=c("orange","blue"),lty=c('solid','solid','twodash','twodash'), horiz=FALSE, bty='n')
+#abline(h=0.5)
+title(xlab=bquote("Lifespan (Days" ~italic(post)~ "Treatment)"), ylab="Survival function") 
+axis(1, at=seq(10 , 90, by=20), lwd=0, lwd.ticks=1)
+
+```
+
+```{r, echo=FALSE}
+library(broom)
+model<-coxph(formula=mySurv~ LifespanData$Dose + LifespanData$Genotype + LifespanData$Genotype*LifespanData$Dose)
+summary(model)
+CpH_model = tidy(model)
+
+if(CpH_model$p.value[1] > 0.05){
+    paste("The variable", colnames(LifespanData[4]),"has no signficant effect on survival, with a p value of", CpH_model$p.value[1])
+} else {
+  paste("The variable", colnames(LifespanData[4]),"has a signficant effect on survival, with an estimated HR of",CpH_model$estimate[1],"and a p value of", CpH_model$p.value[1])
+}
+
+if(CpH_model$p.value[2] > 0.05){
+    paste("The variable", colnames(LifespanData[5]),"has no signficant effect on survival, with a p value of", CpH_model$p.value[2])
+} else {
+  paste("The variable", colnames(LifespanData[5]),"has a signficant effect on survival, with an estimated HR of",CpH_model$estimate[2],"and a p value of", CpH_model$p.value[2])
+}
+
+if(CpH_model$p.value[3] > 0.05){
+    paste("The interaction between", colnames(LifespanData[4]),"and", colnames(LifespanData[5]),"does not have a signficant effect on lifespan, with a p value of", CpH_model$p.value[3])
+} else {
+  paste("The interaction between", colnames(LifespanData[4]),"and", colnames(LifespanData[5]),"has a signficant effect on lifespan, with a p value of", CpH_model$p.value[3])
+}
+```
+
+
+###Testing assumptions of Coxph model
+
+**Proportional hazards (PH) -** scaled Scheonfeld residual plot. For details on how to inteprete the graphical output see next section.
+```{r, echo=FALSE}
+
+model_zph<-cox.zph(model)
+model_zph
+ggcoxzph(model_zph)
+
+if(model_zph$table[1,3] > 0.05){
+    paste("For variable", colnames(LifespanData[4]),", PH assumption was met, with a p value of", model_zph$table[1,3])
+} else {
+  paste("For variable", colnames(LifespanData[4]),", PH assumption was not met, with a p value of", model_zph$table[1,3])
+}
+
+if(model_zph$table[2,3] > 0.05){
+    paste("For variable", colnames(LifespanData[5]),", PH assumption was met, with a p value of", model_zph$table[2,3])
+} else {
+  paste("For variable", colnames(LifespanData[5]),", PH assumption was not met, with a p value of", model_zph$table[2,3])
+}
+
+if(model_zph$table[3,3] > 0.05){
+    paste("For the interaction between the variables", colnames(LifespanData[4]),"and", colnames(LifespanData[5]),", PH assumption was met, with a p value of", model_zph$table[3,3])
+} else {
+  paste("For the interaction between the variables", colnames(LifespanData[4]),"and", colnames(LifespanData[5]),", PH assumption was not met, with a p value of", model_zph$table[3,3])
+}
+
+```
+
+**Outliers -** Devience plot
+```{r, echo=FALSE}
+
+ggcoxdiagnostics(model,type='deviance')
+x<-ggcoxdiagnostics(model,type='deviance')
+
+```
+
+**Linear relationship between variables and HR -** Martingale plot
+```{r, echo=FALSE}
+
+ggcoxdiagnostics(model)
+
+```
+
+**Note -** for information to how best to inteprete the graphical tests of assumptions, see next section or the useful sources provided below.
+
+#Results in more detail
+
+##Statistical analysis of survival data
+
+ Deciding which approach to analyse your survival data can be a difficult decision. Majority of these approaches are relatively easy to implement, with each offering its own advantages and disadvantages.It is not the intention of this script, nor the acompanying article to evaluate the various aprroaches, we have opted to use CoxPH modelling, and here are the main considerations that were made when deciding the most appriopriate approach. 
+
+**First consideration -** data distribution. The various aprroaches can be split into either parametric or non-paprametric and depending on your data's distribution will determine which tests are appriopriate to use. Examples of common paramentric methods include: accelerated failure time (AFT) and parametric CoxPH modelling. All parametric modelling of survival data assumes that the distribution of the survival data is of a particular distribution, and due to this underlying assumption, parametric modelling has the advantage of producing preciser estimates of effect sizes and smaller assosiated standard errors. On the other hand, non-parametric appraoches do not assume a particular distribution and common examples include logrank test and CoxPH modelling. Because the distribution is not assumed, these non-parametric methods can be thought of as being more "robust" but do suffer the disadvantage of less precise effect size estimates and higher standard errors. It was decided that for this script and data analysis a non-parametric approach will be used as this will be more universally applicable for the majority of analyses.
+
+**Second consideration -** variable(s), what type and how many. Depending on your study's aims and the biological question you are interested in answering will determine the number of variables you want to study. Are you interested in simply knowing if there is a significant difference between two cohorts within a single variable, or are you studying multiple variables and are interested in if there are interactions between these variables. Depending on your biological question will determine the statistical approach that should be undertaken.
+
+Therefore, due to the considerations mentioned, Cox proportional hazard modelling was decided on and will be used in this document because it is easily implemented, it is relatively robust (no assumptions of data's distribution), and finally it can account for multiple variables simultanousely.
+
+**`r colFmt("Note -",'red')`** there are of course many other considerations that need to be considered when deciding on which approach to use (e.g. sample size, fixed-variables, etc) and they have been extensively covered in the Surivival analysis articles (Bradburn et al., 2003), it is highyl recommended that you read these articles (see Useful reading section).
+
+##Checking replicates
+
+Before performing CoxPH modelling on variables we are investigating, we should first check that there is no significant difference in lifespan between replicates (vials/tubes). To do so, we will look at each replicates within each cohort.
+
+If you identify replicates which appear to be significantly different/outliers, manually remove them from your dataset and rerun this script. Once you have removed the outliers and your replicates appear not be significantly different from each other, then you can proceed to the next section.
+
+**Note 1 -** A statistically powered survival analysis can be performed on as little as 50 Drosophila (quote Pletcher). Therefore do not worry about removing "too many" replicates, as the 12 replicates provided by the MultiFlipper are more than sufficient, provided at least 10 flies are within each replicate.
+
+**Note 2 -** If you are consistantly censoring a particular replicates or more than 2 - 3 replicates, then it is recommended to evaluate your lifespan assaying technique/methods.To ensure no systemic issue is at fault e.g. censoring the same tube in every experiment.
+
+**Note 2 -** Do not worry too much about removing replicates, one of the assumptions of CoxPH modelling is no outliers within dataset, therefore, a graphical output is produced which will determine if replicates are present.
+
+
+##Cox Proportional hazards modelling
+
+ Perhaps the most common non-parametric approaches to survival data analysis are logrank and CoxPH modelling. Logrank is probably the most robust test as it has less assumptions but its drawbacks are that it cannot estimate effect size, nor can it analyse multiple variables simultanously, and it should only be performed on a catogorical variable. For these reason CoxPH modelling is recommended. CoxPH modelling, which is typically used by clinical researchers, is a non-parametric regressional model which allows for the simultanous modelling of multiple variables (and interaction) and their effect sizes on survival data.
+
+CoxPH modelling can determine:
+
+ - Whether a variable has a significant effect on survival.
+ 
+ - Simultanously assess the effect of multiple variables.
+ 
+ - Effect size/Hazard ratios (HR) assosiated with each variable.
+ 
+
+
+## CpH model assumptions
+
+CpH modelling makes three assumptions and they are as follows: Proprotional Hazards (PH), no outliers, and appropriately modelled relationship between variables.For a detailed explanation of testing CpH model assumptions in R can be found at `r myFun(params$text4, params$link4)`. http://www.sthda.com/english/wiki/cox-model-assumptions#testing-proportional-hazards-assumption also here, make this a link!!!!!!!!!!!!!!!!
+
+**Assumption**  |  **Statistical Test**  | **R function** |  **Inference of test** | **Inference of graph**
+------------ |  ----------------- |  --------- | ------------------ | ------------------
+ Proportional Hazards (PH)     | Schoenfeld | cox.zph() | *p* value > 0.05 = PH | Random pattern of Schoenfeld residues agaisnt time is an indication of PH
+ No influential observations (outliers) | Deviance plot | ggcoxdiagnostics(type = 'deviance') | - | No extreme residuals along Y axis
+ Linear relationship between variables and hazard ratio (HR) | Martingale | ggcoxdiagnostics(type = 'martingale') | - | even distribution along Y axis, with 0 being central point.
+
+**`r colFmt("Note -",'red')`** each test produces a graphical outcome which needs to be inspected to determine if assumptions are met.
+
+**`r colFmt("Note -",'red')`** KM plots when interpreted correctly can give an indication of PHs independent of time. If two surivival curves are criss-crossing, then it is likely that PH is dependent on time and therefore assumption is not met. In other words, if an individual has a risk of death at some initial time point that is twice as high as that of another individual, then at all later times the risk of death remains twice as high.
+
+
+#Useful Reading
+
+ - Us, github, paper etc
+ 
+ - Clark, T.G., Bradburn, M.J. & Altman, D.G. (2003) Survival Analysis Part I: Basic concepts and first analyses. British Journal of Cancer 89, 232 - 238. https://www.nature.com/articles/6601118
+ 
+ - Bradburn, M.J., Clark, T.G., Love, S.B. & Altman, D.G. (2003) Survival Analysis Part II: Multivariate data analysis - an introduction to concepts and methods. British Journal of Cancer 89, 431 - 436. https://www.nature.com/articles/6601119
+ 
+ - Bradburn, M.J., Clark, T.G., Love, S.B. & Altman, D.G. (2003) Survival Analysis Part III: Multivariate data analysis - choosing a model and assessing its adequacy and fit. British Journal of Cancer 89, 605 - 611. https://www.nature.com/articles/6601120
+ 
+ - Bradburn, M.J., Clark, T.G., Love, S.B. & Altman, D.G. (2003) Survival Analysis Part IV: Further concepts and methods in survival analysis. British Journal of Cancer 89, 781 - 786. https://www.nature.com/articles/6601117
+ 
+ - Therneau, T.M. (2019) R Package 'Survival'. https://cran.r-project.org/web/packages/survival/survival.pdf
+ 
+ - Kassambara, A., Kosinski, M., Biecek, P. & Fabian, S. (2019) https://cran.r-project.org/web/packages/survminer/survminer.pdf

@@ -3,7 +3,8 @@ title: "4. Analyse Drosben survival data "
 author: "Terrence M. Trinca and Joaquín de Navascués"
 output:
   html_document:
-    #theme: united
+    code_folding: hide
+    theme: united
     toc: yes
     toc_float: yes
     toc_depth: 3
@@ -32,50 +33,215 @@ Dr Terry M Therneau
 and (again, mostly) Alboukadel Kassambara
 ([Survminer package](https://cran.r-project.org/web/packages/survminer/))
 
-```{r setup_installation_loading, echo=FALSE, cache=FALSE, warning=FALSE}
+```{r setup, cache = FALSE,  message = FALSE, warning = FALSE}
 require(librarian)
 librarian::shelf(
-  tidyverse,
-  readxl,
-  survival, survminer,
-  ggthemes, ggtext, RColorBrewer,
+  tidyverse, readxl,
+  survival, survminer, glue,
+  gtsummary, kableExtra,
+  ggthemes, ggtext, ggnewscale, RColorBrewer,
+  grid, gridExtra, # TMT
   knitr,
   rstudioapi, # TMT
-  gridExtra,  # TMT
-  grid,       # TMT
   quiet = TRUE)
-ggplot2::theme_set(ggpubr::theme_pubr(base_size=10))
-fsep <- .Platform$file.sep
-knitr::opts_chunk$set(
-  dev = 'png', 
-  fig.align = 'center', fig.height = 7, fig.width = 10, 
-  pdf.options(encoding = "ISOLatin9.enc"),
-  fig.path=paste0('notebook_figs', fsep),
-  warning=FALSE,
-  message=FALSE)
+knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+```
+
+Some helper functions we will use later:
+```{r helper-functions}
+# utility to choose more or less interactively the line styles
+surv_two_var_aes <- function(fit, data,
+                             hue, # one var distinguished by distinct colours
+                             palette = 'Set2', # selection of Brewer colours
+                             idx = c(1,2),     # by colour number within palette
+                             hue_direction = c("hot2cold", "cold2hot"), # order of colours
+                             shade = var2, # other var distinguished by saturation and linetype
+                             darkening=FALSE,
+                             linetypes = c("solid", "longdash", "dashed", "dotted")) {
+  
+  if (!is.factor(data[[hue]]))   data[[hue]]   <- factor(data[[hue]])
+  if (!is.factor(data[[shade]])) data[[shade]] <- factor(data[[shade]])
+  hue_levels   <- levels(data[[hue]])      # reference = first
+  shade_levels <- levels(data[[shade]])
+  nh <- length(hue_levels)
+  ns <- length(shade_levels)
+
+  if (length(idx) != nh)
+    stop("`idx` must have one index per `hue` level (", nh, "), got ", length(idx), ".")
+  if (length(palette) == 1L) palette <- rep(palette, nh)
+  if (length(palette) != nh)
+    stop("`palette` must be length 1 (shared) or one per `hue` level (", nh, ").")
+  if (ns > length(linetypes))
+    stop("`shade` has ", ns, " levels but only ", length(linetypes), " linetypes.")
+
+  hue_direction <- match.arg(hue_direction)
+
+  linetype_combos <- list(
+    '2' = linetypes[c(1,4)],
+    '3' = linetypes[c(1,3,4)],
+    '4' = linetypes
+  )
+
+  ## base colours → borrow hue and value per hue level
+  base_cols <- vapply(seq_len(nh),
+                      function(i) brewer.pal(8, palette[i])[idx[i]], character(1))
+  if (length(base_cols) != length(unique(base_cols)))
+    stop("you have repeated hues - please check the `palette` and `idx` arguments")
+
+  hsvb  <- rgb2hsv(col2rgb(base_cols))         # rows: h, s, v
+  if(hue_direction=="hot2cold") {
+    hsvb <- hsvb[, order(hsvb["h", ])]
+    } else {
+    hsvb <- hsvb[, rev(order(hsvb["h", ]))]
+    }
+  H_lev <- setNames(hsvb["h", ], hue_levels)   # hue   per hue level
+  V_lev <- setNames(hsvb["v", ], hue_levels)   # VALUE per hue level (fixed)
+
+  ## saturation: half-of-max → max, across shade levels
+  s_max <- max(hsvb["s", ])
+  svals <- if(ns == 1L) { s_max } else {seq(s_max / 2, s_max, length.out = ns)}
+  if (!darkening) svals <- rev(svals)          # FALSE → reference is most saturated
+  names(svals) <- shade_levels
+
+  ## linetype follows saturation: least saturated = solid, most = dotted
+  lty_by_level <- linetype_combos[[as.character(ns)]]
+  names(lty_by_level) <- shade_levels
+
+  ## assemble in fit$strata order — value from hue, saturation from shade
+  parts   <- strsplit(names(fit$strata), ", ", fixed = TRUE)
+  get_val <- function(p, v) {
+    pref <- paste0(v, "=")
+    trimws(substring(p[startsWith(p, pref)], nchar(pref) + 1))
+  }
+  hl <- vapply(parts, get_val, character(1), v = hue)
+  sl <- vapply(parts, get_val, character(1), v = shade)
+
+  list(colours   = setNames(hsv(H_lev[hl], svals[sl], V_lev[hl]), names(fit$strata)),
+       linetypes = setNames(unname(lty_by_level[sl]),            names(fit$strata)))
+}
+
+# utility to preview the hue/value/linetype choices:
+preview_aes <- function(av, n_points = 50) {
+  strata <- names(av$colours)
+  n      <- length(strata)
+
+  df <- do.call(rbind, lapply(seq_len(n), function(i) {
+    x <- seq(0, 1, length.out = n_points)
+    data.frame(
+      x   = x,
+      y   = (n - i) + 1 + (sample(-10:10, n_points, replace = TRUE) / 100),
+      key = strata[i]
+    )
+  }))
+
+  df$key <- factor(df$key, levels = strata)   # lock legend + curve order
+
+  ggplot(df, aes(x, y, colour = key, linetype = key)) +
+    geom_line(linewidth = 0.4) +
+    scale_colour_manual(values   = av$colours) +
+    scale_linetype_manual(values = av$linetypes) +
+    scale_y_continuous(breaks = unique(df$y[df$x == 0]),
+                       labels = strata) +
+    labs(x = NULL, y = NULL, colour = "Stratum", linetype = "Stratum") +
+    theme_classic(base_size = 5) +
+    theme(legend.position = "right")
+}
+
+
+# to beautify the legends
+surv_split_legend <- function(g, fit, av, hue, shade,
+                              hue_labels = NULL, shade_labels = NULL,
+                              hue_title = hue, shade_title = shade) {
+
+  ## parse "genotype=wild-type, treatment=mock" → component levels -----------
+  pick <- function(varname) {
+    parts <- strsplit(names(fit$strata), ", ", fixed = TRUE)
+    pref  <- paste0(varname, "=")
+    vapply(parts, function(x) substring(x[startsWith(x, pref)], nchar(pref) + 1),
+           character(1))
+  }
+  geno <- pick(hue); trt <- pick(shade)
+
+  ## one representative swatch per level (last occurrence = most saturated) --
+  kg <- !duplicated(geno, fromLast = TRUE)
+  kt <- !duplicated(trt,  fromLast = TRUE)
+  hue_values <- setNames(av$colours[kg],   geno[kg])
+  lty_values <- setNames(av$linetypes[kt], trt[kt])
+
+  if (is.null(hue_labels))   hue_labels   <- names(hue_values)
+  if (is.null(shade_labels)) shade_labels <- names(lty_values)
+
+  ## NA-coord dummy layers: train the scale (→ legend keys) but draw nothing -
+  dg <- data.frame(x = NA_real_, y = NA_real_,
+                   .g = factor(names(hue_values), levels = names(hue_values)))
+  dt <- data.frame(x = NA_real_, y = NA_real_,
+                   .t = factor(names(lty_values), levels = names(lty_values)))
+
+  g$plot <- g$plot +
+    guides(colour = "none", linetype = "none") +          # kill merged legend
+    ## genotype → colour
+    new_scale_colour() +
+    geom_line(data = dg, aes(x, y, colour = .g), na.rm = TRUE) +
+    scale_colour_manual(name = hue_title, values = hue_values, labels = hue_labels,
+                        guide = guide_legend(order = 1,
+                          override.aes = list(linetype = "solid", linewidth = 1.4))) +
+    ## treatment → linetype
+    new_scale("linetype") +
+    geom_line(data = dt, aes(x, y, linetype = .t), colour = "grey20", na.rm = TRUE) +
+    scale_linetype_manual(name = shade_title, values = lty_values, labels = shade_labels,
+                          guide = guide_legend(order = 2,
+                            override.aes = list(colour = "grey20", linewidth = 0.7))) +
+    theme(legend.text = element_markdown(), legend.title = element_markdown())
+
+  g
+}
+
+
+# to beatify the legends
+strata_labels <- function(fit, delim = ' | ', subs = NULL) {
+    ## "genotype=wild-type, treatment=mock" -> "wild-type, mock"
+    lab <- gsub("[^=,]+=", "", names(fit$strata))
+    lab <- trimws(gsub(",", delim, lab))
+    if (!is.null(subs))                       # apply any markup swaps, e.g. mfg[1]
+        for (from in names(subs))
+            lab <- gsub(from, subs[[from]], lab, fixed = TRUE)
+    lab
+}
 ```
 
 ### Survival analysis
 
 We are not statisticians, so the analyses illustrated here are not very
 sophisticated. However, you should be somewhat familiar with:
+
 - [Kaplan-Meier](https://rmvpaeme.github.io/KaplanMeier_intro/) [(KM) plots](pmc.ncbi.nlm.nih.gov/articles/PMC5045282/pdf/jadp-07-091.pdf)
+
 - [Cox-proportional hazards (CPH) modelling](http://www.sthda.com/english/wiki/cox-proportional-hazards-model)
+
 - and [CPH model assumptions](http://www.sthda.com/english/wiki/cox-model-assumptions)
 
 There are plenty of resources online that explain at different levels of
-expertise what these are and how to interpret them. Two reasonable resources are
+expertise what these are and how to interpret them. Some reasonable resources are:
+
 - STHDA's [_Survival Analysis Basics_](https://www.sthda.com/english/wiki/survival-analysis-basics)
 and [_Survival Analysis_](https://www.sthda.com/english/wiki/survival-analysis)
 guides.
+
 - TDV Swinscow's [_Statistics at Square One_ at the BJM](https://www.bmj.com/about-bmj/resources-readers/publications/statistics-square-one)
 But, in a nutshell, KM plots are used to estimate and visualise survival distributions. Log-rank tests can tell you whether two or more of these distributions are significantly different, but not by how much nor is suitable for more than pair-wise comparisons. CPH modelling can also test for significance but also it can (1) compare multiple distributions at time and (2) _quantify the size of the effect_. However, this is only informative if the assumptions of the CPH model hold.
 
+- The four-part tutorial on survival analysis by [MJ Bradburn, TG Clark, SB Love and DG Altman in the British Journal of Cancer](https://www.nature.com/bjc/articles?type=tutorial-paper&year=2003)
+
 Our steps will be:
+
 - Load the data and demonstrate how to do additional cleanup, if needed.
+
 - Check for equal distribution of replicates within each cohort and decide whether outlier replicates should be eliminated.
+
 - Plot KM graphs to visualise survival distributions.
+
 - Perform CPH modelling for replicates, experimental variables and their interactions.
+
 - Check that the assumptions of the CPH model hold.
 
 ## 4B. Initial inspection of the data
@@ -97,25 +263,27 @@ your-home-directory/
        └──02.02.2022_Effect-of-myfavouritegene-on-lifespan_bd8b2f79/
           └──bd8b2f79_observations.xlsx
 ```
-```{r,  echo = FALSE, message = FALSE, warning = FALSE}
+```{r load-data,  message = FALSE, warning = FALSE}
 # This code block allows you to find the file interactively
-#filepath <- file.choose()
+# filepath <- file.choose()
+# for knitting:
 filepath <- file.path(
   "/Users/JQ",
   "Drosben_userdata/experiments_data",
   "02.02.2022_Effect-of-myfavouritegene-on-lifespan_bd8b2f79/bd8b2f79_observations.xlsx"
   )
 survdata <- read_excel(filepath, sheet = 'Observations_analysis')
-head(survdata)
+kbl(head(survdata)) %>%
+  kable_styling(full_width = FALSE) %>%
+  column_spec(1:ncol(survdata), width = "8em")
 ```
 The column names of this dataframe are fixed, except for the variable names, which are decided by the user in the [first Jupyter noteboook](./01_First_Use_Colour_Calibration.html). We could obtain them from the `experimentID_infodict.xlsx` file, but it is easier to do:
-```{r}
+```{r colnames}
 fixed_colnames <- c("Day_no.", "Rack_no.", "Tube_no.", "Event_code")
-var_names <- !(colnames(survdata) %in% fixed_colnames)
-vars <- setdiff(colnames(survdata), fixed_colnames)
-var1 <- vars[[1]]
-var2 <- vars[[2]]
-vars
+varnames <- setdiff(colnames(survdata), fixed_colnames)
+var1 <- varnames[[1]]
+var2 <- varnames[[2]]
+varnames
 ```
 
 In the example, the specimens are organised like this:
@@ -133,20 +301,16 @@ However, the user has the flexibility to organise this in any other way, for ins
 Stratum no. | Variable levels   | Rack_no. | Tube_nos. | Replicates
 ------------|-------------------|----------|-----------|----------------------
      1      |wild-type, mock    |     1    |    1-6    | rack 1, tubes 1 - 6
-            |                   |     2    |    1-6    | rack 2, tubes 1 - 6
-------------|-------------------|----------|-----------|----------------------
+     1      |wild-type, mock    |     2    |    1-6    | rack 2, tubes 1 - 6
      2      | _mfg^1^_, mock    |     1    |    7-12   | rack 1, tubes 7 - 12
-            |                   |     2    |    7-12   | rack 2, tubes 7 - 12
-------------|-------------------|----------|-----------|----------------------
+     2      | _mfg^1^_, mock    |     2    |    7-12   | rack 2, tubes 7 - 12
      3      |wild-type, treated |     3    |    1-6    | rack 3, tubes 1 - 6
-            |                   |     4    |    1-6    | rack 4, tubes 1 - 6
-------------|-------------------|----------|-----------|----------------------
+     3      |wild-type, treated |     4    |    1-6    | rack 4, tubes 1 - 6
      4      | _mfg^1^_, treated |     3    |    7-12   | rack 3, tubes 7 - 12
-            |                   |     4    |    7-12   | rack 4, tubes 7 - 12
-------------|-------------------|----------|-----------|----------------------
+     4      | _mfg^1^_, treated |     4    |    7-12   | rack 4, tubes 7 - 12
 
 Or even more complicated arrangements, like each Stratum occupying 3 tubes in each of the 4 racks—maybe not even the same tube numbers in each rack. To ensure _any_ arrangement of replicates (the distinct physical tubes) is captured, we do:
-```{r,  echo = FALSE, message = FALSE, warning = FALSE}
+```{r clean-colnames,  message = FALSE, warning = FALSE}
 rep_key <- survdata %>%
   distinct(.data[[var1]], .data[[var2]], `Rack_no.`, `Tube_no.`) %>%
   arrange(.data[[var1]], .data[[var2]], `Rack_no.`, `Tube_no.`) %>%
@@ -161,14 +325,23 @@ survdata <- survdata %>%
     event = Event_code,
     day   = `Day_no.`)
 
-head(survdata)
+kbl(head(survdata)) %>%
+  kable_styling(full_width = FALSE) %>%
+  column_spec(1:ncol(survdata), width = "8em")
 ```
+
+Finally, we need to define which variable conditions are our reference (controls):
+```{r set-reference-lvls}
+survdata[[var1]] <- factor(survdata[[var1]], levels = c('wild-type', 'mfg[1]'))
+survdata[[var2]] <- factor(survdata[[var2]], levels = c('mock', 'treated'))
+```
+
 
 ### Analysis of replicates
 
 To ensure consistency of behaviour of within replicates, we subset the data:
 
-```{r}
+```{r replicates}
 # replicate as a factor → discrete colours + a clean legend
 levels <- as.character(sort(unique(as.integer(as.character(survdata$replicate)))))
 survdata$replicate <- factor(survdata$replicate, levels = levels)
@@ -207,7 +380,7 @@ g
 ```
 
 From this, we might want to remove replicate #2 of the _mfg^1^_, mock stratum, as there is full mortality beforre day 40. However, this is likely due to a large amount of censoring at around day 20, followed by the death of one or two individuals left in the tube (see [Jupyter notebook #3](./03_Read_DataSheets.html), section 3C). This will likely have no impact on the final result, but we might just as well eliminate this replicate:
-```{r}
+```{r replicate-filter}
 survdata_filt <- survdata %>%
   filter_out(.data[[var1]]=='mfg[1]' & .data[[var2]]=='mock' & replicate==2)
 
@@ -241,115 +414,174 @@ g <- ggsurvplot_facet(
 
 g
 ```
-While replicates #1 for both treatments in _mfg^1^_ individuals seem to be outliers, they are not fundamentally different and I will keep them.
+While replicates #1 for both treatments in _mfg^1^_ individuals seem to be outliers, they are not fundamentally different and we will keep them.
 
 
-## 4C. Effect on survival of `r var1`, `r var2` or their interaction
+## 4C. Effect on survival of `r var1`, `r var2`
 
+### Basic Kaplan-Meier plot with log-rank testing
 
+We want now to plot `r var1` and `r var2` in two colourblind-friendly hues (i.e. blue and orange) with each level on different lightness/linetype. We can choose colours from the `RColorBrewer` palettes:
 
+```{r show-RColorBrewer-palettes, echo=FALSE, fig.height=3, fig.width=2}
+par(cex = 0.5)
+display.brewer.all(colorblindFriendly = TRUE)
+```
 
+I will use colour #2 from Set2 as my orange and colour #2 from Paired as my blue, for the genotypes, and I will use shading and linetype to distinguish treatments:
 
+```{r set-line-aes, fig.width=3, fig.height=0.5}
+# to keep the code generic, instead of writing the formula as
+# Surv(day, event) ~ genotype + treatment
+# we can use `glue`:
+gluedformula <- as.formula(glue("Surv(day, event) ~ {var1} + {var2}"))
+# this way the code could run with more than just the example data
+fit <- surv_fit(formula = gluedformula,
+               data = survdata_filt)
+S <- surv_two_var_aes(fit, survdata_filt,
+                      hue   = var1, # genotypes distinguished by distinct colours
+                      palette = c('Set2', 'Paired'), # selection of Brewer colours
+                      idx = c(2,2),                  # by colour number within palette
+                      hue_direction = "cold2hot", # order of colours
+                      shade = var2, # treatments distinguished by saturation and linetype
+                      darkening=TRUE)
 
+p <- preview_aes(S, n_points=7)
+p + theme(legend.key.height = unit(0.02, "cm"))
+```
 
+These combinations seem easy to discriminate, so we can now plot the 4 survival curves:
 
+```{r plot-to-save, cache = FALSE, message = FALSE, warning = FALSE}
+# specific for the example dataset >>>
+subs <- c("mfg[1]" = "_mfg_<sup>1</sup>")               
+legendlabs <- strata_labels(fit, delim=' | ', subs = subs)
+title <- 'Survival effects of _mfg^1^_ and _treatment_' # specific for the example dataset
+# <<< specific for the example dataset
 
-
-
-Prepare the graph:
-
-```{r,  echo = FALSE, message = FALSE, warning = FALSE}
-palette <- c('#85C1E9', '#999999', '#E74C3C', #'#F1C40F'
-             '#4444DD', '#000000', '#A2103C') # '#F39C12'
-line_type <- c(rep("solid",3),rep("twodash",3))
-title <- 'Susceptibility to *S. marcescens*'
-g <- ggsurvplot(surv_fit(Surv(hour, event) ~ genotype + treatment,
-                         data = data),
+g <- ggsurvplot(fit, survdata_filt,
                 pval = TRUE,                       # adds pval
                 conf.int = TRUE,                   # adds 95% confidence interval
                 conf.int.alpha = 0.1,              # makes it more transparent
-                surv.median.line = "v",           # adds median points
-                palette = palette,
-                xlab = "Time (hours)",              # remove x axis label
-                ylab = "Survival Probability",     # y axis label
-                linetype = line_type,
-                title = title,
-                font.legend = c(7),               # legend size
-                legend = "bottom")                  # legend position
+                surv.median.line = "hv",           # adds median points
+                palette  = unname(S$colours),
+                linetype = unname(S$linetypes),
+                xlab = "Time (days)",              # remove x axis label
+                ylab = "Survival probability",     # y axis label
+                font.legend = c(7),                # legend size
+                legend = "bottom",                 # legend position
+                
+                title = title,           # comment or change for your own data
+                legend.labs = legendlabs # comment or change for your own data
+)
+
+g$plot <- g$plot + # specific layering for ggsurvplot
+  guides(colour = guide_legend(ncol = 2), linetype = guide_legend(ncol = 2)) +
+  theme(plot.title = element_markdown(),
+        legend.text = element_markdown(),
+        legend.title = element_blank())
+g
+ggsave(
+  'km_basic.pdf',
+  plot = get_last_plot(),
+  width = 8,
+  height = 5,
+  units ="cm",
+  dpi = 300)
 ```
 
-#### To prepare the legend:
+From this, it is clear that the treatment seems to have no effect, or very little (and positive) on the wild-types, but a very strong effect on the _mfg^1^_ mutants. However, the untreated _mfg^1^_ mutants also seem to have a higher mortality than wild-types. The compound effect of mutation and treatment does not seem additive, but this analysis cannot tell us whether there is an interaction between genotype and treatment (i.e. whether the treatment is detrimental _specifically_ for _mfg^1^_ flies).
 
-Let's have a look at our strata (by default organised as `genotype:treatment` in alphabetical order): 
-```
-{r,  echo = FALSE, message = FALSE, warning = FALSE}
-levels(g$data.survtable$strata)
-```
-But I'd like to present the strata as here:
-```
-{r,  echo = FALSE, message = FALSE, warning = FALSE}
-exgrid <- expand.grid(unique(sort(data$genotype, decreasing = TRUE)),
-                      unique(sort(data$treatment, decreasing = TRUE)))
-exgrid <- exgrid[order(exgrid$Var2),]
-lab_strata <- paste(exgrid$Var1, exgrid$Var2, sep=" | ")
-lab_strata
-```
-```
-{r}
-lab_strata <- c("*myoIA>ctrl^KD^* | Sucrose",
-                "*myoIA>Etl1^KD^* | Sucrose",
-                "*ken^1^* | Sucrose",
-                "*myoIA>ctrl^KD^* | S.marcescens",
-                "*myoIA>Etl1^KD^* | S.marcescens",
-                "*ken^1^* | S.marcescens")
-lab_strata
-```
-to match the colours and the line types like this:
+The p-value indicated in the figure is from a log-rank test, which only tells us whether, of the 4 survival curves, at least one is significantly different. If we wanted more detail (e.g. are untreated mutants less longevous than untreated controls?), we would need to do paired log-rank tests.
 
-```
-{r,  echo = FALSE, message = FALSE, warning = FALSE, fig.height = 1, fig.width=2.5}
-x <- rep(c(1:20), 6)
-variable <- unlist(lapply(lab_strata, rep, 20))
-value <- c( 5+rnorm(20)/5, 4+rnorm(20)/5, 3+rnorm(20)/5,
-            2+rnorm(20)/5, 1+rnorm(20)/5, rnorm(20)/5 )
-df <- data.frame(x, variable, value)
-d <- ggplot(df, aes(x=x, y=value, group=variable, colour=variable )) +
-  geom_line(aes(linetype=variable, colour=variable)) +
-  scale_linetype_manual(breaks=lab_strata, values=line_type, labels=LETTERS[1:6]) +
-  scale_colour_manual(breaks=lab_strata, values=palette, labels=LETTERS[1:6]) +
-  theme(legend.text=element_text(size=5),
-        legend.title = element_text(size=6),
-        legend.key.height = unit(1/6, 'in'))
-d
+However, if the assumptions of the Cox Proportional Hazards model were respected, this modelling would be far more informative, as we could ask for variable interactions.
+
+### Cox Proportional Hazards modelling
+
+To test whether our data respect the assumption of proportional hazards, first we need to build the model itself, so we might just as well evaluate the model first and check after whether it is solid.
+
+For this, we simply change the generic modelling produced by `survival::survfit` or `survminer::surv_fit` for `survival::coxph`:
+
+```{r cph}
+gluedformula <- as.formula(glue("Surv(day, event) ~ {var1} * {var2}"))
+# `~ var1 * var2` expands to `~ var1 + var2 + var1:var2`
+phfit <- coxph(formula = gluedformula,
+               data = survdata_filt)
 ```
 
-To match what we want, the order of the legends, colours and line types should be like:
-```
-{r,  echo = FALSE, message = FALSE, warning = FALSE}
-lab_strata[c(1,3,2,4,6,5)]
-```
-And the reverse order would be:
-```
-{r,  echo = FALSE, message = FALSE, warning = FALSE}
-l <- levels(g$data.survtable$strata)[c(6,2,4,5,1,3)]
-l
-```
-Now we can start with the preliminary plot:
+From this, we can obtain the _Hazard Ratios_ (HR) for each of the significant conditions and their p-values:
 
-```
-{r,  echo = FALSE, message = FALSE, warning = FALSE, fig.height = 3, fig.width=5}
-g$plot +
-  scale_colour_manual(name='', breaks=l, values=palette,
-                      labels=lab_strata[c(1,3,2,4,6,5)],
-                      guide=guide_legend(nrow = 3)) +
-  scale_fill_manual(name='', breaks=l, values=palette,
-                    labels=lab_strata[c(1,3,2,4,6,5)],
-                    guide=guide_legend(nrow = 3)) +
-  scale_linetype_manual(name='', breaks=l, values=line_type,
-                        labels=lab_strata[c(1,3,2,4,6,5)],
-                        guide=guide_legend(nrow = 3)) +
-  theme(legend.text=element_markdown(),
-        plot.title = element_markdown())
+```{r gtsummary}
+tbl_regression(phfit,
+               exponentiate = TRUE,
+               pvalue_fun = ~ format.pval(.x, digits = 1, eps = 1e-16)
+) %>% bold_p()
 ```
 
-It seems that the only susceptible flies are the _ken^1^_
+We can also obtain explicitly the median survival for each experimental stratum:
+
+```{r median-lifespans}
+medians <- summary(fit)$table[, "median"]
+medians <- data.frame(names = names(medians),
+                      medians = unname(medians))
+medians <- medians %>%
+  mutate(conditions = str_replace_all(names, "[^=,]+=", "")) %>%
+  mutate(conditions = str_replace(conditions, ",", " | ")) %>%
+  mutate(conditions = trimws(conditions)) %>%
+  select(!names)
+kbl(medians) %>%
+  kable_styling(full_width = FALSE) %>%
+  column_spec(1:ncol(medians), width = "10em")
+```
+
+All this confirms that:
+
+- _mfg^1^_ mutants are significantly (p=0.007) less long lived (~8% shorter median lifespan, and 1.4 hazard ratio)
+
+- the treatment specifically affects _mfg^1^_ mutants, which reduce their median lifespan a _further_ 43%, and have a hazard ratio (respect to untreated wild-types) of 7.2.
+
+The hazard ratio is not as intuitive as the median lifespan as a measure of the strength of the effect, but it is far more precise. Each condition's hazard is like the decay rate of a radioactive isotope — the instantaneous _rate_ at which survivors are "lost" — except that an isotope's decay rate is constant, but death rates (mortality) tend to increase with age in most organisms, and _Drosophila_ is no exception. So, the 'half-life' of a fly is reduced with age. The hazard ratio is simply how many times faster one condition decays than the other, and the model assumes that multiple stays constant across the lifespan (the _proportional hazards_ assumption) even as the underlying rate (for the reference condition) climbs (in whichever temporal pattern).
+
+In any case before continuing we need to check the model assumptions.
+
+### Test for proportional hazards
+
+The Schoenfeld residuals test is the diagnostic tool to assess whether the proportional hazards assumption is respected:
+
+```{r schoenfeld-test, cache = FALSE, message = FALSE, warning = FALSE}
+model_zph<-cox.zph(phfit)
+model_zph$table %>%
+  kbl(digits = c(2, 0, 3)) %>%
+  kable_styling(full_width = FALSE) %>%
+  column_spec(1, width = "10em") %>%
+  column_spec(2:4, width = "8em")
+```
+
+Here, the null hypothesis is that the assumption is not respected, so a significant p-value indicates a violation of the assumption. The results indicate that the assumption is **not respected** for the compound effect of the treatment and the _mfg^1^_ mutation.
+
+We can have a graphical inspection of why this may be the case looking at the Schoenfeld residuals plots:
+
+```{r schoenfeld-residuals, cache = FALSE, message = FALSE, warning = FALSE, fig.height=9, fig.width=6}
+ggcoxzph(model_zph)
+```
+
+These plots show how the residuals in the interaction term are not following the expectation. This does not mean that the conclusions from the CoxPH model are invalid - the fact that there is a real interaction between genotype and treatment can be seen by eye - but the interpretation of the hazards ratio, for instance, needs to be taken as a timed average rather than a constant.
+
+We can make further diagnostics by detecting outliers:
+
+```{r deviance}
+ggcoxdiagnostics(phfit, type = 'deviance', linear.predictions = FALSE)
+```
+
+Here, we would expect to see a symmetric distribution of deviations around zero. There seems to be more weight over zero across observations, however there are no distant outliers.
+
+The Martingale plot helps evaluating the linear relationship between the considered variables and the hazard ratios:
+
+```{r martingale}
+ggcoxdiagnostics(phfit, linear.predictions = FALSE)
+```
+Each experiment may require more or less sophisticated analysis depending on the experimental design and how the data is distributed.
+
+---
+END
+---

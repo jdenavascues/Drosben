@@ -1,5 +1,3 @@
-[![DOI](https://zenodo.org/badge/1271162077.svg)](https://doi.org/10.5281/zenodo.20999933)
-
 ![deathbed](./img/fly_deathbed.png)
 
 # Drosben: a method for scaling up lifespan analysis of _Drosophila_

@@ -291,7 +291,6 @@ This code block should print `drosbenV`. If it doesn't, exit JupyterLab with Fil
 
 * Hat tip to all the programmers from whom we took tips and tricks found in StackOverflow and GitHub. Their contributions are linked in comments in the code.
 * The sickly fly was drawn by [Cristina Fernández García](https://es.linkedin.com/in/fernandezgarciacristina).
-* Thanks to our former colleagues at the School of Biosciences, Cardiff University, who helped us assess the speed gain using Drosben.
 * [Flying fly silhouette in one of the figures](https://www.vexels.com/vectors/preview/170043/fly-insect-silhouettes")
 
 ---

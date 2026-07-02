@@ -75,6 +75,11 @@ You will need:
 > Most prints require the use of [supports for floating structures](https://store.anycubic.com/blogs/3d-printing-guides/3d-printing-supports). These need to be removed after printing using a flat screwdriver or a knife.
 > Please use a cut resistant glove in the holding hand or a vise (but do not tighten it too much or you will crush the print).
 
+> [!CAUTION]
+> Acrylic cements (i.e. Tensol 12, Anglosol 12) are highly flammable and release toxic fumes.
+> Cyanoacrlylate glue also releases toxic fumes and any splatter or running drop may glue your fingers together or to the parts.
+> Do all the gluing in a well-ventilated space and wear gloves.
+
 ## Building the Racks
 
 ### Printing
@@ -111,8 +116,6 @@ Our latest prints were printed in a Bambulab A1 mini with plain PLA after slicin
 
 ### Post-printing modifications
 
-Remove the supports with a flat screwdriver or a knife -- use a cut resistant glove for the holding hand.
-
 Before gluing, check that the nails enter the opening of the rails with adequate tolerance. If they are too tight, get narrower nails or scrape the inner walls of the rails with a needle or a round coping saw blade. Once you are satisfied, cut off the heas of four nails, add a drop of glue to the tips and push them into the rail's cavities until the nails' ends are flush with the rail openings.
 
 ## Building the Multiflipper
@@ -129,10 +132,24 @@ Our latest prints were printed in a Bambulab A1 mini with plain PLA after slicin
 
 #### 1. Gluing the chambers
 
-#### 2. Gluing the mesh
+This step assumes you already have 12 acrylic tubes of 25 mm external diameter, 2 mm thick, 70-100 mm long (see #5).
+
+Arrange the tubes in the same 4 x 3 honeycomb configuration as the rack and multiflipper, and hold them using rubber bands. Make sure they are **all flush with each other**.
+
+Using a Pasteur pipette, a metal rod or a syringe, run a generous drop of acrylic cement along both sides of the touching tangent of each tube pair. Let them dry for 24 hours.
+
+#### 2. Gluing the mesh to the chambers
+
+Once the chambers are glued into a single solid, cut a rectangle of mesh that covers the tube array (with several mm of margin around) and flatten it as much as possible. Place it on top of the silicone rubber mat, on a strong horizontal surface. Run the cyanoacrylate glue bottle tip along all the rims of the acrylic tubes, without overflowing the rim, and place that side on top of the mesh. Now put some weight on it and let the glue cure.
+
+Once the glue has cured, use the cutter or a scalpel to cut the mesh along the outer edge of the tube array, to have it flush with the tubes.
+
+#### 4. Gluing the chambers to the multiflipper base
 
 
-Cutting the The simplest option os to have the individual acrylictubes Before gluing, check that the nails enter the opening of the rails with adequate tolerance. If they are too tight, get narrower nails or scrape the inner walls of the rails with a needle or a round coping saw blade. Once you are satisfied, cut off the heas of four nails, add a drop of glue to the tips and push them into the rail's cavities until the nails' ends are flush with the rail openings.
+#### 5. Cutting your own tubes
+
+Online retailers typically offer cuts off a long tube starting at 100 mm in length. This is convenient and gets you cuts of the best quality, but there are advantages to cutting your own tubes: first, you save money directly, as every cut adds to the price (the shop needs to amortise the blades!); second, if you cut your own tubes, you can make them shorter, which saves you a bit more money (you are paying by length) and makes the multiflipper lighter, more ergonomic and easier to handle.
 
 - Buy tubes cut to measure or cut tubes with cutter tool (PHOTOS/VIDEO)
 - To cut the tubes for the multi flipper: https://www.youtube.com/watch?v=mZk1wDfr2mY
@@ -143,9 +160,27 @@ Cutting the The simplest option os to have the individual acrylictubes Before gl
 
 ## Slider
 
-- gluing nail PHOTO
+### Printing
+
+Our latest prints were printed in a Bambulab A1 mini with plain PLA after slicing in BambuStudio with:
+
+- the top side of the multiflipper (the one that will host the chambers) facing the printer's bed;
+- preset configuration _0.2 mm standard_;
+- support enabled (with support default settings).
+
+### Post-printing modifications
 
 ## Depositor
+
+### Printing
+
+Our latest prints were printed in a Bambulab A1 mini with plain PLA after slicing in BambuStudio with:
+
+- the top side of the multiflipper (the one that will host the chambers) facing the printer's bed;
+- preset configuration _0.2 mm standard_;
+- support enabled (with support default settings).
+
+### Post-printing modifications
 
 - using the stencil, PHOTOS
 - gluing rubber and nails - no need of photos

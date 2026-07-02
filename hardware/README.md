@@ -132,7 +132,7 @@ Our latest prints were printed in a Bambulab A1 mini with plain PLA after slicin
 
 #### 1. Gluing the chambers
 
-This step assumes you already have 12 acrylic tubes of 25 mm external diameter, 2 mm thick, 70-100 mm long (see #5). Arrange the tubes in the same 4 x 3 honeycomb configuration as the rack and multiflipper, and hold them using rubber bands. Make sure they are **all flush with each other**.
+This step assumes you already have 12 acrylic tubes of 25 mm external diameter, 2 mm thick, 70-100 mm long ([see #6](#6.-Cutting-your-own-tubes)). Arrange the tubes in the same 4 x 3 honeycomb configuration as the rack and multiflipper, and hold them using rubber bands. Make sure they are **all flush with each other**.
 
 Using a Pasteur pipette, a metal rod or a syringe, run a generous drop of acrylic cement along both sides of the touching tangent of each tube pair. Let them dry for 24 hours.
 
@@ -142,13 +142,17 @@ Once the chambers are glued into a single solid, cut a rectangle of mesh that co
 
 Once the glue has cured, use the cutter or a scalpel to cut the mesh along the outer edge of the tube array, to have it flush with the tubes.
 
+Check that the tubes are flush with each other on the open side. If the are not, sand the excess until they are, with care so the surface does not tilt.
+
 #### 4. Gluing the chambers to the multiflipper base
 
-Use the printed Slider as a stencil to cut out a silicone rubber mat piece of the same projected shape. Insert the slider and the silicone cutout into the slider slot of the multiflipper base, with the 
+Use the slider as a stencil to cut out a silicone rubber mat piece of the same projected shape. Insert the slider and the silicone cutout into the slot of the multiflipper base, with the silicone mat towards the top of the base. Place the group on a rack with tubes, so the rubber can be pushed against the top (ceiling) of the multiflipper base.
+
+Then run the cyanoacrylate glue bottle nozzle along the internal edge of the top side of the multiflipper (where the tubes will be glued to) and place the tube array there, supported by the slider (which is covered by the silicone mat so it does not become glued.
 
 #### 5. Gluing the magnets
 
-4 magnets ...
+Glue two N52 disk magnets 10 x 3 mm to each round hole at the front of the multiflipper.
 
 #### 6. Cutting your own tubes
 
@@ -158,37 +162,30 @@ You can cut your tubes with a mitre or table saw, but doing this safely and with
 
 To cut the tubes yourself safely and with reasonably good results, you can use our [_tube cutter with reference_ model] (./3D_models/Utilities/tube_cutter_reference.stl) (printed  with _0.12 mm High Quality_ presets and support enabled). This tool was copied from a design by YouTube user M.S. Idris, who shows how to use it here:
 
-[![cutting_tubes_yourself](http://img.youtube.com/vi/mZk1wDfr2mY/0.jpg)](http://www.youtube.com/watch?v=mZk1wDfr2mY "Good quality cuts of acrylic tubing with an arc saw")
+[![cutting_tubes_yourself](http://img.youtube.com/vi/mZk1wDfr2mY/1.jpg)](http://www.youtube.com/watch?v=mZk1wDfr2mY "Good quality cuts of acrylic tubing with an arc saw")
 
-](https://www.youtube.com/watch?v=mZk1wDfr2mY), with minor modifications so the clamp works with rubber bands and it includes sliding bars (15 cm rods, 3 mm diameter) with a stopper and a M4 bolt to stabilise the length for repeated cutting:
+We added minor modifications so the clamp works with rubber bands and it includes sliding bars (15 cm rods, 3 mm diameter) with a stopper and a M4 bolt to stabilise the length for repeated cutting:
 
 ![tube_cutter_annotated](../img/tube_cutter_annotated.png)
 
+You will need a pipe cutter and an arc saw, as shown in M.S. Idris' video.
+
 ## Slider
 
-### Printing
+Print with the same settings as the multiflipper or the lid, with the top side on the printer's bed. No supports are needed.
 
-Our latest prints were printed in a Bambulab A1 mini with plain PLA after slicing in BambuStudio with:
-
-- the top side of the multiflipper (the one that will host the chambers) facing the printer's bed;
-- preset configuration _0.2 mm standard_;
-- support enabled (with support default settings).
-
-### Post-printing modifications
+Glue one nail into the hole at the tip, with the same precautions as in the rails of the lid and depositor (check tolerances first).
 
 ## Depositor
 
 ### Printing
 
-Our latest prints were printed in a Bambulab A1 mini with plain PLA after slicing in BambuStudio with:
-
-- the top side of the multiflipper (the one that will host the chambers) facing the printer's bed;
-- preset configuration _0.2 mm standard_;
-- support enabled (with support default settings).
+Like the lid. Print as well a stencil, which can be a bit more relaxed (0.2 mm).
 
 ### Post-printing modifications
 
-- using the stencil, PHOTOS
-- gluing rubber and nails - no need of photos
+Using the stencil, use the cutter or a scalpel to cut a piece of neoprene rubber around it. Make sure the cross openings for cutting the cuspid valves have the wider side facing upwards. Press firmly against the rubber with the stencil and cut deeply and slowly - if you stretch the rubber while cutting, the final shape will not match well the outline carved in the depositor. Once the perimeter has been cut, without moving the stencil, make cross cuts in all the indicated places to align the cuspid valves with the holes in the depositor. Use a stack of old paper or soft wood as a base so you can cut through without damaging the working surface.
 
----
+Run the cyanoacrylate glue gel bottle nozzle along the surface of the well for the rubber mat (bottom side, the opposite one to the rails), and press the rubber mat against it. Put some weight on it and leave to cure.
+
+Add nails like to the lid.

@@ -71,11 +71,26 @@ You will need:
 [^c]: Optional tools allow the user to buy 25 mm acrylic tubing in 1 m lengths and cut out their own segments for the multiflipper chambers. This makes the tubes, which are one of the most expensive parts, a bit cheaper (as each cut needs to be paid for separately).
 [^d]: The model is within the 'Utilities' folder as 'tube_cutter_reference'.
 
-## Rack
+## Building the Racks
 
-- considerations for printing (speed, support, layer thickness)
-- connections between the tubes (PHOTOS) ![photo_or_schematic](./img/photo_or_schematic.png)
-- glue magnet - using the first one as template!!! (PHOTO/VIDEO/EXAMPLES)
+### Printing
+
+Our latest prints were sliced in BambuStudio with the preset configuration _0.08 mm High Quality preset_ and support enabled (with support default settings) and printed in a Bambulab A1 mini with plain PLA.
+
+The rack is the only model with very thin areas, where the tubes almost touch and in the sleeve to hold the label. We have not managed to print both faithfully - it seems to be either one or the other:
+![thin_areas_rack](./img/thin_areas_rack.png)
+
+In our experience, hosting the tubes firmly does not need the full cylinder slot - the curved triangles are enough to keep the tubes secured. So we favour printing racks with functional sleeves, for which those settings work well.
+
+### Post-printing modifications
+
+Simply add a drop of cyanoacrylate glue gel to the slot for the magnet and place an N52 neodymium disk magnet (12 x 3 mm) there.
+
+> [!TIP]
+> You will want **all** your racks to have their magnets in the **same orientation**, so all your lids are compatible with any rack. But rare-earth magnets do not indicate their polarity. So, once you have glued the magnet to the first rack, use it as an indicator (once the glue has set!): let the next magnet you glue first attach to the glued magnet, add a drop of glue to the slot where it is going to go, and place it there in the required orientation as indicated in the schematic.
+
+
+- using the first one as template!!! (PHOTO/VIDEO/EXAMPLES)
 
 ## Lid
 

@@ -79,7 +79,7 @@ Our latest prints were sliced in BambuStudio with the preset configuration _0.08
 
 The rack is the only model with very thin areas, where the tubes almost touch and in the sleeve to hold the label. We have not managed to print both faithfully - it seems to be either one or the other:
 
-![thin_areas_rack](./img/thin_areas_rack.png)
+![thin_areas_rack](../img/thin_areas_rack.png)
 
 In our experience, hosting the tubes firmly does not need the full cylinder slot - the curved triangles are enough to keep the tubes secured. So we favour printing racks with functional sleeves, for which those settings work well.
 

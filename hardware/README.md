@@ -170,7 +170,7 @@ You can cut your tubes with a mitre or table saw, but doing this safely and with
 
 To cut the tubes yourself safely and with reasonably good results, you can use our [_tube cutter with reference_ model] (./3D_models/Utilities/tube_cutter_reference.stl) (printed  with _0.12 mm High Quality_ presets and support enabled). This tool was copied from a design by YouTube user M.S. Idris, who shows how to use it here:
 
-[![cutting_tubes_yourself](http://img.youtube.com/vi/mZk1wDfr2mY/1.jpg)](http://www.youtube.com/watch?v=mZk1wDfr2mY "Good quality cuts of acrylic tubing with an arc saw")
+[![cutting_tubes_yourself](http://img.youtube.com/vi/mZk1wDfr2mY/0.jpg)](http://www.youtube.com/watch?v=mZk1wDfr2mY "Good quality cuts of acrylic tubing with an arc saw")
 
 We added minor modifications so the clamp works with rubber bands and it includes sliding bars (15 cm rods, 3 mm diameter) with a stopper and a M4 bolt to stabilise the length for repeated cutting:
 

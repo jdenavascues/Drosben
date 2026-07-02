@@ -60,7 +60,7 @@ See the [hardware README](../hardware/README.md) for the model files for 3D prin
 
 + **Stainless steel or plastic thin mesh**; those described for insect netting would work and are relatively cheap. A piece of ~15 x 20 cm will be enough for a single Multiflipper.
 
-+ **Cyanoacrylate-based universal glue** such as those manufactured by Gorilla, Everbuild or Superglue. There is no need to use a special manufacturer nor presentation (i.e. gel or highly penetrant).
++ **Cyanoacrylate-based universal glue** such as those manufactured by Gorilla, Everbuild or Superglue. There is no need to use a special manufacturer but we prefer the gel presentation (as opposed to 'thin', 'extra thin' or 'highly penetrant') as these will run everywhere and can create frosting in the acrylic tubes.
 
 + **Silicon rubber sheet** of 1mm thickness, cut from a piece of approximately 30 x 20 cm (half to make a single Depositor, the other half to protect the Slider while gluing the Multiflipper).
 

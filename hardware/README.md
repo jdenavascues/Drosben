@@ -55,20 +55,21 @@ You will need:
 
 ## Tools
 
-| Tool | Assumed available | Cost |
-| :--- | :---: | ---: |
-| Pliers (to clip nail heads) | yes | £10.00 |
-| Cutter (to cut mesh and rubber sheet) | yes | £10.00 |
-| 3D printer | yes | £140.00 |
-| Silicon sheet, 0.5 mm thick (to glue the multiflipper) | no | £4.50 |
+| Tool | Assumed available | Cost | Optional[^c] |
+| :--- | :---------------: | ---: | :------: |
+| Pliers (to clip nail heads) | yes | £10.00 | no |
+| Cutter (to cut mesh and rubber sheet) | yes | £10.00 | no |
+| 3D printer | yes | £140.00 | no |
+| Silicon sheet, 0.5 mm thick (to glue the multiflipper) | no | £4.50 | no |
+| Arc saw | yes | £10.00 | yes |
+| 25 mm pipe cutter | yes | £50.00 | yes |
+| 3D-printed tube cutter reference tool[^d] | yes | £1.50 | yes |
 
 [^*]: Prices were estimated in July 2026.
 [^a]: The Depositor and Multiflipper could be shared between users, but for real scalability, it is better to assume they will not be. A rack can house cohorts of up to 180 flies (15 per tube).
 [^b]: Prices have been ceiled to the nearest £1. These are realistic indicative prices, but the exact cost of the initial investment and component may change depending on the specific retailer and the configuration of the pack. Most components have been obtained from non-specialist online retailers, except the acrylic tubing and the woven wire mesh, which are respectively from Simple Plastics and The Mesh Company (both UK companies).
-
-
-[BOM table]
-add tube/arc saw
+[^c]: Optional tools allow the user to buy 25 mm acrylic tubing in 1 m lengths and cut out their own segments for the multiflipper chambers. This makes the tubes, which are one of the most expensive parts, a bit cheaper (as each cut needs to be paid for separately).
+[^d]: The model is within the 'Utilities' folder as 'tube_cutter_reference'.
 
 ## Rack
 

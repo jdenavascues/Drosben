@@ -132,31 +132,37 @@ Our latest prints were printed in a Bambulab A1 mini with plain PLA after slicin
 
 #### 1. Gluing the chambers
 
-This step assumes you already have 12 acrylic tubes of 25 mm external diameter, 2 mm thick, 70-100 mm long (see #5).
-
-Arrange the tubes in the same 4 x 3 honeycomb configuration as the rack and multiflipper, and hold them using rubber bands. Make sure they are **all flush with each other**.
+This step assumes you already have 12 acrylic tubes of 25 mm external diameter, 2 mm thick, 70-100 mm long (see #5). Arrange the tubes in the same 4 x 3 honeycomb configuration as the rack and multiflipper, and hold them using rubber bands. Make sure they are **all flush with each other**.
 
 Using a Pasteur pipette, a metal rod or a syringe, run a generous drop of acrylic cement along both sides of the touching tangent of each tube pair. Let them dry for 24 hours.
 
 #### 2. Gluing the mesh to the chambers
 
-Once the chambers are glued into a single solid, cut a rectangle of mesh that covers the tube array (with several mm of margin around) and flatten it as much as possible. Place it on top of the silicone rubber mat, on a strong horizontal surface. Run the cyanoacrylate glue bottle tip along all the rims of the acrylic tubes, without overflowing the rim, and place that side on top of the mesh. Now put some weight on it and let the glue cure.
+Once the chambers are glued into a single solid, cut a rectangle of mesh that covers the tube array (with several mm of margin around) and flatten it as much as possible. Place it on top of the silicone rubber mat, on a strong horizontal surface. Run the cyanoacrylate glue bottle tip along all the rims of the acrylic tubes, without overflowing the rim (or that will frost the wall of the tubes forever), and place that side on top of the mesh. Now put some weight on it and let the glue cure.
 
 Once the glue has cured, use the cutter or a scalpel to cut the mesh along the outer edge of the tube array, to have it flush with the tubes.
 
 #### 4. Gluing the chambers to the multiflipper base
 
+Use the printed Slider as a stencil to cut out a silicone rubber mat piece of the same projected shape. Insert the slider and the silicone cutout into the slider slot of the multiflipper base, with the 
 
-#### 5. Cutting your own tubes
+#### 5. Gluing the magnets
+
+4 magnets ...
+
+#### 6. Cutting your own tubes
 
 Online retailers typically offer cuts off a long tube starting at 100 mm in length. This is convenient and gets you cuts of the best quality, but there are advantages to cutting your own tubes: first, you save money directly, as every cut adds to the price (the shop needs to amortise the blades!); second, if you cut your own tubes, you can make them shorter, which saves you a bit more money (you are paying by length) and makes the multiflipper lighter, more ergonomic and easier to handle.
 
-- Buy tubes cut to measure or cut tubes with cutter tool (PHOTOS/VIDEO)
-- To cut the tubes for the multi flipper: https://www.youtube.com/watch?v=mZk1wDfr2mY
-- Show glueing with tensol 12 - PHOTO
-- Show glueing with superglue - SCHEMATIC
-- Frosting (PHOTO)
-- Gluing magnets
+You can cut your tubes with a mitre or table saw, but doing this safely and without notching the tubes requires more than basic DIY skill so we will not cover it here. If you think you can do it, you probably do not need our help.
+
+To cut the tubes yourself safely and with reasonably good results, you can use our [_tube cutter with reference_ model] (./3D_models/Utilities/tube_cutter_reference.stl) (printed  with _0.12 mm High Quality_ presets and support enabled). This tool was copied from a design by YouTube user M.S. Idris, who shows how to use it here:
+
+[![cutting_tubes_yourself](http://img.youtube.com/vi/mZk1wDfr2mY/0.jpg)](http://www.youtube.com/watch?v=mZk1wDfr2mY "Good quality cuts of acrylic tubing with an arc saw")
+
+](https://www.youtube.com/watch?v=mZk1wDfr2mY), with minor modifications so the clamp works with rubber bands and it includes sliding bars (15 cm rods, 3 mm diameter) with a stopper and a M4 bolt to stabilise the length for repeated cutting:
+
+![tube_cutter_annotated](../img/tube_cutter_annotated.png)
 
 ## Slider
 

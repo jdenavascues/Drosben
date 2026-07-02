@@ -71,6 +71,10 @@ You will need:
 [^c]: Optional tools allow the user to buy 25 mm acrylic tubing in 1 m lengths and cut out their own segments for the multiflipper chambers. This makes the tubes, which are one of the most expensive parts, a bit cheaper (as each cut needs to be paid for separately).
 [^d]: The model is within the 'Utilities' folder as 'tube_cutter_reference'.
 
+> [!CAUTION]
+> Most prints require the use of [supports for floating structures](https://store.anycubic.com/blogs/3d-printing-guides/3d-printing-supports). These need to be removed after printing using a flat screwdriver or a knife.
+> Please use a cut resistant glove in the holding hand or a vise (but do not tighten it too much or you will crush the print).
+
 ## Building the Racks
 
 ### Printing
@@ -78,7 +82,7 @@ You will need:
 Our latest prints were printed in a Bambulab A1 mini with plain PLA after slicing in BambuStudio with:
 
 - the base of the Rack facing the printer's bed;
-- preset configuration _0.08 mm High Quality preset_;
+- preset configuration _0.08 mm High Quality_;
 - support enabled (with support default settings).
 
 The rack is the only model with very thin areas, where the tubes almost touch and in the sleeve to hold the label. We have not managed to print both faithfully - it seems to be either one or the other:
@@ -95,9 +99,6 @@ Simply add a drop of cyanoacrylate glue gel to the slot for the magnet and place
 > You will want **all** your racks to have their magnets in the **same orientation**, so all your lids are compatible with any rack. But rare-earth magnets do not indicate their polarity. So, once you have glued the magnet to the first rack, use it as an indicator (once the glue has set!): let the next magnet you glue first attach to the glued magnet, add a drop of glue to the slot where it is going to go, and place it there in the required orientation as indicated in the schematic:
 > ![magnet_orientation](../img/magnet_orientation.png)
 
-
-- using the first one as template!!! (PHOTO/VIDEO/EXAMPLES)
-
 ## Building the Lids
 
 ### Printing
@@ -105,14 +106,33 @@ Simply add a drop of cyanoacrylate glue gel to the slot for the magnet and place
 Our latest prints were printed in a Bambulab A1 mini with plain PLA after slicing in BambuStudio with:
 
 - the top side of the Lid facing the printer's bed;
-- preset configuration _0.12 mm High Quality preset_;
+- preset configuration _0.12 mm High Quality_;
 - support enabled (with support default settings).
 
 ### Post-printing modifications
 
+Remove the supports with a flat screwdriver or a knife -- use a cut resistant glove for the holding hand.
+
 Before gluing, check that the nails enter the opening of the rails with adequate tolerance. If they are too tight, get narrower nails or scrape the inner walls of the rails with a needle or a round coping saw blade. Once you are satisfied, cut off the heas of four nails, add a drop of glue to the tips and push them into the rail's cavities until the nails' ends are flush with the rail openings.
 
 ## Building the Multiflipper
+
+### Printing
+
+Our latest prints were printed in a Bambulab A1 mini with plain PLA after slicing in BambuStudio with:
+
+- the top side of the multiflipper (the one that will host the chambers) facing the printer's bed;
+- preset configuration _0.2 mm standard_;
+- support enabled (with support default settings).
+
+### Post-printing modifications
+
+#### 1. Gluing the chambers
+
+#### 2. Gluing the mesh
+
+
+Cutting the The simplest option os to have the individual acrylictubes Before gluing, check that the nails enter the opening of the rails with adequate tolerance. If they are too tight, get narrower nails or scrape the inner walls of the rails with a needle or a round coping saw blade. Once you are satisfied, cut off the heas of four nails, add a drop of glue to the tips and push them into the rail's cavities until the nails' ends are flush with the rail openings.
 
 - Buy tubes cut to measure or cut tubes with cutter tool (PHOTOS/VIDEO)
 - To cut the tubes for the multi flipper: https://www.youtube.com/watch?v=mZk1wDfr2mY

@@ -75,7 +75,11 @@ You will need:
 
 ### Printing
 
-Our latest prints were sliced in BambuStudio with the preset configuration _0.08 mm High Quality preset_ and support enabled (with support default settings) and printed in a Bambulab A1 mini with plain PLA.
+Our latest prints were printed in a Bambulab A1 mini with plain PLA after slicing in BambuStudio with:
+
+- the base of the Rack facing the printer's bed;
+- preset configuration _0.08 mm High Quality preset_;
+- support enabled (with support default settings).
 
 The rack is the only model with very thin areas, where the tubes almost touch and in the sleeve to hold the label. We have not managed to print both faithfully - it seems to be either one or the other:
 
@@ -94,11 +98,21 @@ Simply add a drop of cyanoacrylate glue gel to the slot for the magnet and place
 
 - using the first one as template!!! (PHOTO/VIDEO/EXAMPLES)
 
-## Lid
+## Building the Lids
 
-- glue nails and magnet - use template (PHOTO/VIDEO)
+### Printing
 
-## Multiflipper
+Our latest prints were printed in a Bambulab A1 mini with plain PLA after slicing in BambuStudio with:
+
+- the top side of the Lid facing the printer's bed;
+- preset configuration _0.12 mm High Quality preset_;
+- support enabled (with support default settings).
+
+### Post-printing modifications
+
+Before gluing, check that the nails enter the opening of the rails with adequate tolerance. If they are too tight, get narrower nails or scrape the inner walls of the rails with a needle or a round coping saw blade. Once you are satisfied, cut off the heas of four nails, add a drop of glue to the tips and push them into the rail's cavities until the nails' ends are flush with the rail openings.
+
+## Building the Multiflipper
 
 - Buy tubes cut to measure or cut tubes with cutter tool (PHOTOS/VIDEO)
 - To cut the tubes for the multi flipper: https://www.youtube.com/watch?v=mZk1wDfr2mY

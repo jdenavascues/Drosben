@@ -248,9 +248,9 @@ Our steps will be:
 
 ### Loading the data
 
-The [last (3^rd^) Jupyter python notebook](./03_Read_DataSheets.html) produces an XLSX file whose `Observations_analysis` spreadsheet will contain the events (deaths, censorings) ready for analysis with _survival_ in the form:
+The [last (3^rd^) Jupyter python notebook](./03_Read_DataSheets.html) produces an XLSX file whose `Observ_m2c_atStart_analysis` spreadsheet will contain the events (deaths, censorings) ready for analysis with _survival_ in the form:
 
- Day_no. | Rack_no. | Tube_no. | genotype | treatment | Event_code
+ Day_no. | Rack_no. | Tube_no. | genotype | treatment | Event
 ---------|----------|----------|----------|-----------|------------
     1    |     1    |    1     | wild-type|    mock   | 1 _(death)_
     1    |     1    |    2     | wild-type|    mock   | 0 _(censor)_
@@ -263,23 +263,25 @@ your-home-directory/
        └──02.02.2022_Effect-of-myfavouritegene-on-lifespan_bd8b2f79/
           └──bd8b2f79_observations.xlsx
 ```
+
+In principle we can simply find this automatically but if this is not possible, you will be able to find it interactively:
 ```{r load-data,  message = FALSE, warning = FALSE}
-# This code block allows you to find the file interactively
-# filepath <- file.choose()
-# for knitting:
 filepath <- file.path(
-  "/Users/JQ",
-  "Drosben_userdata/experiments_data",
-  "02.02.2022_Effect-of-myfavouritegene-on-lifespan_bd8b2f79/bd8b2f79_observations.xlsx"
-  )
-survdata <- read_excel(filepath, sheet = 'Observations_analysis')
+  path.expand("~"),
+  "Drosben_userdata", "experiments_data",
+  "02.02.2022_Effect-of-myfavouritegene-on-lifespan_bd8b2f79",
+  "bd8b2f79_observations.xlsx"
+)
+if (!file.exists(filepath)) filepath <- file.choose()
+
+survdata <- read_excel(filepath, sheet = 'Observ_m2c_atStart_analysis')
 kbl(head(survdata)) %>%
   kable_styling(full_width = FALSE) %>%
   column_spec(1:ncol(survdata), width = "8em")
 ```
 The column names of this dataframe are fixed, except for the variable names, which are decided by the user in the [first Jupyter noteboook](./01_First_Use_Colour_Calibration.html). We could obtain them from the `experimentID_infodict.xlsx` file, but it is easier to do:
 ```{r colnames}
-fixed_colnames <- c("Day_no.", "Rack_no.", "Tube_no.", "Event_code")
+fixed_colnames <- c("Day_no.", "Rack_no.", "Tube_no.", "Event")
 varnames <- setdiff(colnames(survdata), fixed_colnames)
 var1 <- varnames[[1]]
 var2 <- varnames[[2]]
@@ -322,7 +324,7 @@ survdata <- survdata %>%
   left_join(rep_key, by = c(var1, var2, "Rack_no.", "Tube_no.")) %>%
   select(!c(`Rack_no.`, `Tube_no.`)) %>%
   rename(
-    event = Event_code,
+    event = Event,
     day   = `Day_no.`)
 
 kbl(head(survdata)) %>%
@@ -461,6 +463,9 @@ title <- 'Survival effects of _mfg^1^_ and _treatment_' # specific for the examp
 
 g <- ggsurvplot(fit, survdata_filt,
                 pval = TRUE,                       # adds pval
+                pval.coord = c(-3, 0.05),
+                censor = TRUE,                     # adds censorings
+                censor.shape = 124,                # censorings represented with '|'
                 conf.int = TRUE,                   # adds 95% confidence interval
                 conf.int.alpha = 0.1,              # makes it more transparent
                 surv.median.line = "hv",           # adds median points
@@ -468,7 +473,7 @@ g <- ggsurvplot(fit, survdata_filt,
                 linetype = unname(S$linetypes),
                 xlab = "Time (days)",              # remove x axis label
                 ylab = "Survival probability",     # y axis label
-                font.legend = c(7),                # legend size
+                font.legend = c(8),                # legend size
                 legend = "bottom",                 # legend position
                 
                 title = title,           # comment or change for your own data
@@ -476,17 +481,22 @@ g <- ggsurvplot(fit, survdata_filt,
 )
 
 g$plot <- g$plot + # specific layering for ggsurvplot
-  guides(colour = guide_legend(ncol = 2), linetype = guide_legend(ncol = 2)) +
-  theme(plot.title = element_markdown(),
+  guides(colour = guide_legend(ncol = 1), linetype = guide_legend(ncol = 1)) +
+  theme(plot.title = element_markdown(face = 'bold', size=18),
+        axis.title.x = element_text(face = 'bold', size=16),
+        axis.title.y = element_text(face = 'bold', size=16),
+        axis.text.x = element_text(face = 'bold', size=13),
+        axis.text.y = element_text(face = 'bold', size=13),
+        axis.line = element_line(colour = 'black', size = 0.7),
+        axis.ticks = element_line(colour = "black", size = 0.7),
         legend.text = element_markdown(),
-        legend.title = element_blank())
+        legend.title = element_blank(),
+        legend.position = "inside",
+        legend.position.inside = c(0.85, 0.8))
 g
 ggsave(
   'km_basic.pdf',
   plot = get_last_plot(),
-  width = 8,
-  height = 5,
-  units ="cm",
   dpi = 300)
 ```
 
@@ -500,18 +510,12 @@ However, if the assumptions of the Cox Proportional Hazards model were respected
 
 To test whether our data respect the assumption of proportional hazards, first we need to build the model itself, so we might just as well evaluate the model first and check after whether it is solid.
 
-For this, we simply change the generic modelling produced by `survival::survfit` or `survminer::surv_fit` for `survival::coxph`:
-
-```{r cph}
+For this, we simply change the generic modelling produced by `survival::survfit` or `survminer::surv_fit` for `survival::coxph`. This approach allow us to obtain the _Hazard Ratios_ (HR) for each of the significant conditions, and their p-values:
+```{r cph-gtsummary, cache = FALSE, message = FALSE, warning = FALSE}
 gluedformula <- as.formula(glue("Surv(day, event) ~ {var1} * {var2}"))
 # `~ var1 * var2` expands to `~ var1 + var2 + var1:var2`
 phfit <- coxph(formula = gluedformula,
                data = survdata_filt)
-```
-
-From this, we can obtain the _Hazard Ratios_ (HR) for each of the significant conditions and their p-values:
-
-```{r gtsummary}
 tbl_regression(phfit,
                exponentiate = TRUE,
                pvalue_fun = ~ format.pval(.x, digits = 1, eps = 1e-16)
@@ -520,7 +524,7 @@ tbl_regression(phfit,
 
 We can also obtain explicitly the median survival for each experimental stratum:
 
-```{r median-lifespans}
+```{r median-lifespans, cache = FALSE, message = FALSE, warning = FALSE}
 medians <- summary(fit)$table[, "median"]
 medians <- data.frame(names = names(medians),
                       medians = unname(medians))
@@ -565,22 +569,7 @@ We can have a graphical inspection of why this may be the case looking at the Sc
 ggcoxzph(model_zph)
 ```
 
-These plots show how the residuals in the interaction term are not following the expectation. This does not mean that the conclusions from the CoxPH model are invalid - the fact that there is a real interaction between genotype and treatment can be seen by eye - but the interpretation of the hazards ratio, for instance, needs to be taken as a timed average rather than a constant.
-
-We can make further diagnostics by detecting outliers:
-
-```{r deviance}
-ggcoxdiagnostics(phfit, type = 'deviance', linear.predictions = FALSE)
-```
-
-Here, we would expect to see a symmetric distribution of deviations around zero. There seems to be more weight over zero across observations, however there are no distant outliers.
-
-The Martingale plot helps evaluating the linear relationship between the considered variables and the hazard ratios:
-
-```{r martingale}
-ggcoxdiagnostics(phfit, linear.predictions = FALSE)
-```
-Each experiment may require more or less sophisticated analysis depending on the experimental design and how the data is distributed.
+These plots show how the residuals in the interaction term are not following the expectation. This does not mean that all the conclusions from the CoxPH model are invalid - the fact that there is an interaction between genotype and treatment can be seen by eye! However, the interpretation of the hazards ratio, for instance, needs to be taken as a timed average rather than a constant. The CoxPH model can be refined/extended considering the hazard ratio as a function of time, which in this case could probably resolve the problem. But this seems an overkill for this dataset (which is synthetic, anyway!).
 
 ---
 END

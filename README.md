@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/1271162077.svg)](https://doi.org/10.5281/zenodo.20999933)
+
 ![deathbed](./img/fly_deathbed.png)
 
 # Drosben: a method for scaling up lifespan analysis of _Drosophila_
@@ -58,7 +60,7 @@ See the [hardware README](../hardware/README.md) for the model files for 3D prin
 
 + **Stainless steel or plastic thin mesh**; those described for insect netting would work and are relatively cheap. A piece of ~15 x 20 cm will be enough for a single Multiflipper.
 
-+ **Cyanoacrylate-based universal glue** such as those manufactured by Gorilla, Everbuild or Superglue. There is no need to use a special manufacturer nor presentation (i.e. gel or highly penetrant).
++ **Cyanoacrylate-based universal glue** such as those manufactured by Gorilla, Everbuild or Superglue. There is no need to use a special manufacturer but we prefer the gel presentation (as opposed to 'thin', 'extra thin' or 'highly penetrant') as these will run everywhere and can create frosting in the acrylic tubes.
 
 + **Silicon rubber sheet** of 1mm thickness, cut from a piece of approximately 30 x 20 cm (half to make a single Depositor, the other half to protect the Slider while gluing the Multiflipper).
 
@@ -288,8 +290,7 @@ This code block should print `drosbenV`. If it doesn't, exit JupyterLab with Fil
 # 4. Acknowledgments
 
 * Hat tip to all the programmers from whom we took tips and tricks found in StackOverflow and GitHub. Their contributions are linked in comments in the code.
-* Thanks to [Cristina Fernández García](https://es.linkedin.com/in/fernandezgarciacristina) and [Pau Berenguer Molins](https://es.linkedin.com/in/pauberenguermolins), who helped validating the hardware.
-* Thanks to our former colleagues at the School of Biosciences, Cardiff University, who helped us assess the speed gain using Drosben.
+* The sickly fly was drawn by [Cristina Fernández García](https://es.linkedin.com/in/fernandezgarciacristina).
 * [Flying fly silhouette in one of the figures](https://www.vexels.com/vectors/preview/170043/fly-insect-silhouettes")
 
 ---

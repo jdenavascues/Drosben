@@ -136,6 +136,8 @@ This step assumes you already have 12 acrylic tubes of 25 mm external diameter, 
 
 Using a Pasteur pipette, a metal rod or a syringe, run a generous drop of acrylic cement along both sides of the touching tangent of each tube pair. Let them dry for 24 hours.
 
+![gluing_tube_array](../img/gluing_tube_array.png)
+
 #### 2. Gluing the mesh to the chambers
 
 Once the chambers are glued into a single solid, cut a rectangle of mesh that covers the tube array (with several mm of margin around) and flatten it as much as possible. Place it on top of the silicone rubber mat, on a strong horizontal surface. Run the cyanoacrylate glue bottle tip along all the rims of the acrylic tubes, without overflowing the rim (or that will frost the wall of the tubes forever), and place that side on top of the mesh. Now put some weight on it and let the glue cure.
@@ -144,11 +146,17 @@ Once the glue has cured, use the cutter or a scalpel to cut the mesh along the o
 
 Check that the tubes are flush with each other on the open side. If the are not, sand the excess until they are, with care so the surface does not tilt.
 
+![gluing_mesh](../img/gluing_mesh.png)
+
 #### 4. Gluing the chambers to the multiflipper base
 
 Use the slider as a stencil to cut out a silicone rubber mat piece of the same projected shape. Insert the slider and the silicone cutout into the slot of the multiflipper base, with the silicone mat towards the top of the base. Place the group on a rack with tubes, so the rubber can be pushed against the top (ceiling) of the multiflipper base.
 
+![mounted_multiflipper_base](../img/mounted_multiflipper_base.png)
+
 Then run the cyanoacrylate glue bottle nozzle along the internal edge of the top side of the multiflipper (where the tubes will be glued to) and place the tube array there, supported by the slider (which is covered by the silicone mat so it does not become glued.
+
+![gluing_multiflipper_chambers](../img/gluing_multiflipper_chambers.png)
 
 #### 5. Gluing the magnets
 

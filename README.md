@@ -10,8 +10,6 @@ We have developed a toolkit that allows transferring flies from 12 tubes into fr
 
 Please refer to our paper describing the Drosben system together with a few new observations using this approach:
 
----
-Drosben preprint (TBD):
 Terrence M. Trinca, Pau Berenguer-Molins, Cristina Fernández-García, Joaquín de Navascués
 Drosben, an affordable system for scalable survival analysis in Drosophila
 bioRxiv 2026.07.02.736118; doi: [https://doi.org/10.64898/2026.07.02.736118](https://www.biorxiv.org/content/10.64898/2026.07.02.736118)

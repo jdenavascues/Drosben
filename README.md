@@ -8,10 +8,14 @@ _Drosophila melanogaster_ is a powerful model organism to study ageing, or any o
 
 We have developed a toolkit that allows transferring flies from 12 tubes into fresh ones ('flipping') simultaneosly, which we have named _Drosben_ (a portmanteau of _Drosophila_ and _trosben_, Welsh for sommersault). Drosben comprises both hardware (which can be made cheaply with 3D printing and minimal DIY modifications) and software (a simple python module with notebooks for usage). One speeds the manual labour, and the other one speeds the data recording -- producing a quick preliminary analysis and a spreadsheet ready to be analysed in a more targeted way in R with the package `survival`.
 
-Please refer to our paper describing the Drosben system together with a few new observations using this approach:
+---
 
-Terrence M. Trinca, Pau Berenguer-Molins, Cristina Fernández-García, Joaquín de Navascués
-Drosben, an affordable system for scalable survival analysis in Drosophila
+For more details, please refer to our paper describing the Drosben system together with a few new observations using this approach:
+
+Terrence M. Trinca, Pau Berenguer-Molins, Cristina Fernández-García, Joaquín de Navascués.
+
+Drosben, an affordable system for scalable survival analysis in _Drosophila_.
+
 bioRxiv 2026.07.02.736118; doi: [https://doi.org/10.64898/2026.07.02.736118](https://www.biorxiv.org/content/10.64898/2026.07.02.736118)
 
 ---

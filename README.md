@@ -95,6 +95,8 @@ When the experiment is finished (or you want to inspect the data), scan the data
 
 ![step3](./img/usage3.png)
 
+---
+
 # 2. The Drosben software
 
 We wrote a python package to speed up the data collection, both when recording fly deaths and when compiling the observations in electronic form. It takes advantage of the shape of the tubes as held in the rack, so the user at the bench can quickly record deaths as pen marks on a printed template; then these can easily be scanned, automatically detected with computer vision, and compiled into a spreadsheet for analysis. So, while the hardware can be used without the software, this is not the case the other way around; however, the drosben system is more effective when both hardware and software are used together.

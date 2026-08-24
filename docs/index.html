@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Drosben Manuals</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --text: #1f2328;
+    --muted: #57606a;
+    --border: #d8dee4;
+    --accent: #0969da;
+    --card-bg: #f6f8fa;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 2.5rem 1.5rem 4rem;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+  }
+  .wrap {
+    max-width: 780px;
+    margin: 0 auto;
+  }
+  h1 {
+    font-size: 1.75rem;
+    margin-bottom: 0.25rem;
+  }
+  .intro {
+    color: var(--muted);
+    margin-bottom: 2.5rem;
+    max-width: 60ch;
+  }
+  .step {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--card-bg);
+    margin-bottom: 1.5rem;
+    padding: 1.25rem 1.5rem;
+  }
+  .step-title {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    margin: 0 0 0.75rem;
+  }
+  .step-num {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0.03em;
+  }
+  .step-title a {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--text);
+    text-decoration: none;
+  }
+  .step-title a:hover {
+    color: var(--accent);
+    text-decoration: underline;
+  }
+  ul.toc {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  ul.toc ul {
+    list-style: none;
+    margin: 0.15rem 0 0.15rem 1.1rem;
+    padding-left: 0.9rem;
+    border-left: 2px solid var(--border);
+  }
+  ul.toc li {
+    margin: 0.2rem 0;
+  }
+  ul.toc a {
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 0.95rem;
+  }
+  ul.toc > li > a {
+    font-weight: 600;
+    color: var(--text);
+    font-size: 1rem;
+  }
+  ul.toc a:hover {
+    text-decoration: underline;
+  }
+  footer {
+    margin-top: 3rem;
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>Drosben user manuals</h1>
+  <p class="intro">Step-by-step guides for running Drosben experiments, from first-time colour calibration through to survival analysis. Click a step to open its manual, or jump straight to a subsection.</p>
+
+  <div class="step">
+    <p class="step-title">
+      <span class="step-num">STEP 1</span>
+      <a href="01_First_Use_Colour_Calibration.html">First use: colour calibration</a>
+    </p>
+    <ul class="toc">
+      <li><a href="01_First_Use_Colour_Calibration.html#1A.-Overview">1A. Overview</a></li>
+      <li>
+        <a href="01_First_Use_Colour_Calibration.html#1B.-Colour-calibration-of-your-marker-pens">1B. Colour calibration of your marker pens</a>
+        <ul>
+          <li><a href="01_First_Use_Colour_Calibration.html#Colour-calibration-overview">Colour calibration overview</a></li>
+          <li><a href="01_First_Use_Colour_Calibration.html#Print-and-fill-the-Colour-Calibration-Sheet">Print and fill the Colour Calibration Sheet</a></li>
+          <li><a href="01_First_Use_Colour_Calibration.html#DRY-RUN:-Load-test-samples-of-colour-calibration-scans">DRY RUN: Load test samples of colour calibration scans</a></li>
+          <li><a href="01_First_Use_Colour_Calibration.html#Load-your-own-colour-calibration-scans">Load your own colour calibration scans</a></li>
+        </ul>
+      </li>
+      <li><a href="01_First_Use_Colour_Calibration.html#1C.-Consider-the-results">1C. Consider the results</a></li>
+    </ul>
+  </div>
+
+  <div class="step">
+    <p class="step-title">
+      <span class="step-num">STEP 2</span>
+      <a href="02_Initialise_Experiment.html">Initialise experiment</a>
+    </p>
+    <ul class="toc">
+      <li><a href="02_Initialise_Experiment.html#2A.-The-Drosben-Experiment">2A. The Drosben Experiment</a></li>
+      <li>
+        <a href="02_Initialise_Experiment.html#2B.-Capturing-experimental-metadata">2B. Capturing experimental metadata</a>
+        <ul>
+          <li>
+            <a href="02_Initialise_Experiment.html#OPTION-1:-Capturing-metadata-with-the-XLSX-file-template">Option 1: Capturing metadata with the XLSX file template</a>
+            <ul>
+              <li><a href="02_Initialise_Experiment.html#Select-path-to-Excel-file-(using-sample-file)">Select path to Excel file (using sample file)</a></li>
+              <li><a href="02_Initialise_Experiment.html#Create-the-'experiment-information-dictionary'">Create the 'experiment information dictionary'</a></li>
+            </ul>
+          </li>
+          <li><a href="02_Initialise_Experiment.html#OPTION-2:-Capturing-metadata-directly-in-python">Option 2: Capturing metadata directly in python</a></li>
+          <li><a href="02_Initialise_Experiment.html#Practical-adjustment:-matching-the-new-experiment-with-existing-data">Practical adjustment: matching the new experiment with existing data</a></li>
+        </ul>
+      </li>
+      <li><a href="02_Initialise_Experiment.html#2C.-Create-your-Experiment-and-its-directory">2C. Create your Experiment and its directory</a></li>
+      <li>
+        <a href="02_Initialise_Experiment.html#2D.-Start-collecting-data">2D. Start collecting data</a>
+        <ul>
+          <li><a href="02_Initialise_Experiment.html#2.-Fill-in-the-DataSheets---basic-convention">Fill in the DataSheets - basic convention</a></li>
+          <li><a href="02_Initialise_Experiment.html#Print-the-rack-labels-and-datasheets">Print the rack labels and datasheets</a></li>
+          <li>
+            <a href="02_Initialise_Experiment.html#4.-Fill-in-the-DataSheets---potential-complications">Fill in the DataSheets - potential complications</a>
+            <ul>
+              <li><a href="02_Initialise_Experiment.html#When-does-a-carried-over-fly-count-as-a-death?">When does a carried-over fly count as a death?</a></li>
+              <li><a href="02_Initialise_Experiment.html#From-which-tube-does-a-censored-fly-escape?">From which tube does a censored fly escape?</a></li>
+            </ul>
+          </li>
+          <li><a href="02_Initialise_Experiment.html#3.-Scan-them">Scan them</a></li>
+          <li><a href="02_Initialise_Experiment.html#4.-Go-to-Notebook-%2303.">Go to Notebook #03</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+
+  <div class="step">
+    <p class="step-title">
+      <span class="step-num">STEP 3</span>
+      <a href="03_Read_DataSheets.html">Read DataSheets</a>
+    </p>
+    <ul class="toc">
+      <li><a href="03_Read_DataSheets.html#3A.-Overview">3A. Overview</a></li>
+      <li>
+        <a href="03_Read_DataSheets.html#3B.-Compile-data-from-DataSheets-of-a-finished-experiment">3B. Compile data from DataSheets of a finished experiment</a>
+        <ul>
+          <li><a href="03_Read_DataSheets.html#--OW-to-allow-overwriting-wrong-data">OW &ndash; allow overwriting wrong data</a></li>
+          <li><a href="03_Read_DataSheets.html#--dry_run-to-test-the-code">dry_run &ndash; test the code</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="03_Read_DataSheets.html#3C.-Gather-and-clean-event-data">3C. Gather and clean event data</a>
+        <ul>
+          <li><a href="03_Read_DataSheets.html#Overview">Overview</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+
+  <div class="step">
+    <p class="step-title">
+      <span class="step-num">STEP 4</span>
+      <a href="04_Analyse_Data.html">Analyse Drosben survival data</a>
+    </p>
+    <ul class="toc">
+      <li>
+        <a href="04_Analyse_Data.html#a.-setting-up">4A. Setting up</a>
+        <ul>
+          <li><a href="04_Analyse_Data.html#computing-tools">Computing tools</a></li>
+          <li><a href="04_Analyse_Data.html#survival-analysis">Survival analysis</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="04_Analyse_Data.html#b.-initial-inspection-of-the-data">4B. Initial inspection of the data</a>
+        <ul>
+          <li><a href="04_Analyse_Data.html#loading-the-data">Loading the data</a></li>
+          <li><a href="04_Analyse_Data.html#analysis-of-replicates">Analysis of replicates</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="04_Analyse_Data.html#c.-effect-on-survival-of-genotype-treatment">4C. Effect on survival of genotype, treatment</a>
+        <ul>
+          <li><a href="04_Analyse_Data.html#basic-kaplan-meier-plot-with-log-rank-testing">Basic Kaplan-Meier plot with log-rank testing</a></li>
+          <li><a href="04_Analyse_Data.html#cox-proportional-hazards-modelling">Cox Proportional Hazards modelling</a></li>
+          <li><a href="04_Analyse_Data.html#test-for-proportional-hazards">Test for proportional hazards</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+
+  <footer>Drosben documentation</footer>
+
+</div>
+</body>
+</html>

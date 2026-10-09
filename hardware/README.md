@@ -1,5 +1,10 @@
 # Instructions to assemble the Drosben components
 
+> [!CAUTION]
+> Assembling the hardware brings chemical and mechanical hazards.
+> We give recommendations but you follow them **at your own risk**.
+> **THIS IS NOT A RISK ASSESSMENT**. Some precautions are mentioned, but you **must** do your own risk assessment.
+
 You will need:
 
 ## Component costs[^*]
@@ -98,12 +103,6 @@ In our experience, hosting the tubes firmly does not need the full cylinder slot
 
 ### Post-printing modifications
 
-Simply add a drop of cyanoacrylate glue gel to the slot for the magnet and place an N52 neodymium disk magnet (12 x 3 mm) there.
-
-> [!TIP]
-> You will want **all** your racks to have their magnets in the **same orientation**, so all your lids are compatible with any rack. But rare-earth magnets do not indicate their polarity. So, once you have glued the magnet to the first rack, use it as an indicator (once the glue has set!): let the next magnet you glue first attach to the glued magnet, add a drop of glue to the slot where it is going to go, and place it there in the required orientation as indicated in the schematic:
-> ![magnet_orientation](../docs/img/magnet_orientation.png)
-
 ## Building the Lids
 
 ### Printing
@@ -116,7 +115,7 @@ Our latest prints were printed in a Bambulab A1 mini with plain PLA after slicin
 
 ### Post-printing modifications
 
-Before gluing, check that the nails enter the opening of the rails with adequate tolerance. If they are too tight, get narrower nails or scrape the inner walls of the rails with a needle or a round coping saw blade. Once you are satisfied, cut off the heas of four nails, add a drop of glue to the tips and push them into the rail's cavities until the nails' ends are flush with the rail openings.
+Before gluing, check that the nails enter the opening of the rails with adequate tolerance. If they are too tight, get narrower nails or scrape the inner walls of the rails with a needle or a round coping saw blade. Once you are satisfied, cut off the heas of four nails, add a drop of glue to the tips and push them into the rail's cavities until the nails' ends are flush with the rail openings. Do not glue the magnets yet.
 
 ## Building the Multiflipper
 
@@ -132,6 +131,8 @@ Our latest prints were printed in a Bambulab A1 mini with plain PLA after slicin
 
 #### Obtaining the tubes for the chambers
 
+The chambers are made from acrylic tube of 25 mm external diameter and 2 mm wall thickness, 70-100 mm long.
+
 The easiest way to obtain these is purchasing long tube at a local workshop or online retailer and ask them to cut them down for you. They typically offer cutouts starting at 100 mm in length, with a fee per cut. This is convenient and gets you cuts of the best quality. However, there are advantages to cutting your own tubes: you can make tubes shorter (100 mm makes a bulky, heavy multiflipper), and it saves money in cuts and total tube length. The cuts will not be so clean, though.
 
 You can cut your tubes with a mitre or table saw, but doing this safely and without notching the tubes requires more than basic DIY skill so we will not cover it here. If you think you can do it, you probably do not need our help.
@@ -142,48 +143,41 @@ To cut the tubes yourself safely and with reasonably good results, you can use o
 
 We added minor modifications so the clamp works with rubber bands (faster than bolts) and it includes stainless steel sliding bars (15 cm rods, 3 mm diameter) with a stopper and a M4 bolt to fix the length for repeated cutting:
 
-![tube_cutter_annotated](../docs/img/tube_cutter_annotated.png)
+![tube_cutter_annotated](../docs/img/tube_cutter.png)
 
 You will need a pipe cutter to score the tube, as shown in M.S. Idris' video. Cutting can be done with an arc saw, a tenon saw or a dozuki saw (Japanese woodworking pull saw).
 
 #### Gluing multiflipper frame, chambers and mesh
 
-Let us assume now that you already have 12 acrylic tubes of 25 mm external diameter, 2 mm thick, 70-100 mm long. You 
+Once you have 12 acrylic tubes, you have to glue them to each other, then glue the ensemble of tubes to the multiflipper 3d-printed frame, and then glue the mesh on top:
 
-![sequence](../docs/img/thin_areas_rack.png)
+![sequence](../docs/img/multiflipper_build.png)
 
+**To glue the chambers ensemble**, arrange the tubes in the same 4 x 3 honeycomb configuration as the rack and multiflipper, and hold them using rubber bands. Make sure they are **all flush with each other**. Using a Pasteur pipette, a metal rod or a syringe, run a generous drop of glue along both sides of the touching tangent of each tube pair (magenta arrows in the image above). Let them dry following manufacturer's instructions.
 
+We have tried five different glues:
 
+- Acrylic cement (Tensol 12, Bostik) gives excellent results. Tubes are essentially welded clean. However, it releases nasty volatiles, takes long to dry (24 hours) and once opened, the bottle often dries up before you can use all the cement.
+- Cyanoacrylate (SuperGlue) is strong but releases volatiles that react with the surface of the acrylic plate and frost it, reducing visibility. Do not use.
+- Plastic cement (Poly Cement, Humbrol) is designed for polystyrene and ABS. It cures fast (1 hour) but it is weak. Do not use.
+- Super Plastic Glue (Bondtech) bonds in seconds to minutes, is strong and does not frost the surface of the acrylic tube. It also releases nasty volatiles, but it is a good option.
+- UV Resin Glue (DecorRom) is odorless, and cures after exposure to UV light (included with the glue). It is strong and the cured seal is clear. One must be careful with the eyes, but it is a good option.
 
-([see #5](#5.-Cutting-your-own-tubes)). Arrange the tubes in the same 4 x 3 honeycomb configuration as the rack and multiflipper, and hold them using rubber bands. Make sure they are **all flush with each other**.
+**To glue the chambers to the multiflipper frame**, it is essential that the base of the tubes is flush with the slot for the slider (green arrows in the image above). Therefore, a stand to hold the chambers at the right height is necessary. This is done resting the chambers on the slider, protected from the glue with a thin silicone rubber mat, cut out using the slider as a stencil. Insert the slider and the silicone cutout into the slot of the multiflipper frame, with the silicone mat towards the top of the base. Place the group on a rack with tubes, so the rubber can be pushed against the top (ceiling) of the multiflipper frame.
 
-Using a Pasteur pipette, a metal rod or a syringe, run a generous drop of acrylic cement along both sides of the touching tangent of each tube pair. Let them dry for 24 hours.
+Then run the glue bottle nozzle along the internal edge of the top side of the multiflipper (where the tubes will be glued to) and place the tube array there, supported by the slider (which is covered by the silicone mat so it does not become glued.
 
-![gluing_tube_array](../docs/img/gluing_tube_array.png)
+Once the chambers are glued into a single solid, cut a rectangle of mesh that covers the tube array (with several mm of margin around) and flatten it as much as possible. Place it on top of the silicone rubber mat, on a strong horizontal surface. Run the glue bottle tip along all the rims of the acrylic tubes, without overflowing the rim, and place the mesh on top. Protect it with another piece of silicone rubber (yellow arrow in the image above), put some weight on it and let the glue cure. Once the glue has cured, use the cutter or a scalpel to cut the mesh along the outer edge of the tube array, to have it flush with the tubes.
 
-#### 2. Gluing the mesh to the chambers
+Check that the tubes are flush with each other on the open side. If the are not, sand the excess until they are (mounting sandpaper on the slider), with care so the surface does not tilt.
 
-Once the chambers are glued into a single solid, cut a rectangle of mesh that covers the tube array (with several mm of margin around) and flatten it as much as possible. Place it on top of the silicone rubber mat, on a strong horizontal surface. Run the cyanoacrylate glue bottle tip along all the rims of the acrylic tubes, without overflowing the rim (or that will frost the wall of the tubes forever), and place that side on top of the mesh. Now put some weight on it and let the glue cure.
+## Lid and multiflipper: gluing the magnets
 
-Once the glue has cured, use the cutter or a scalpel to cut the mesh along the outer edge of the tube array, to have it flush with the tubes.
+Glue two N52 disk magnets 10 x 3 mm to each round hole at the front of the multiflipper and the lids. Simply add a drop of cyanoacrylate glue gel to the slot for the magnet and place an N52 neodymium disk magnet (12 x 3 mm) there.
 
-Check that the tubes are flush with each other on the open side. If the are not, sand the excess until they are, with care so the surface does not tilt.
-
-![gluing_mesh](../docs/img/gluing_mesh.png)
-
-#### 3. Gluing the chambers to the multiflipper base
-
-Use the slider as a stencil to cut out a silicone rubber mat piece of the same projected shape. Insert the slider and the silicone cutout into the slot of the multiflipper base, with the silicone mat towards the top of the base. Place the group on a rack with tubes, so the rubber can be pushed against the top (ceiling) of the multiflipper base.
-
-![mounted_multiflipper_base](../docs/img/mounted_multiflipper_base.png)
-
-Then run the cyanoacrylate glue bottle nozzle along the internal edge of the top side of the multiflipper (where the tubes will be glued to) and place the tube array there, supported by the slider (which is covered by the silicone mat so it does not become glued.
-
-![gluing_multiflipper_chambers](../docs/img/gluing_multiflipper_chambers.png)
-
-#### 4. Gluing the magnets
-
-Glue two N52 disk magnets 10 x 3 mm to each round hole at the front of the multiflipper.
+> [!IMPORTANT TIP]
+> You will want **all** your racks to have their magnets in the **same orientation**, so all your lids are compatible with any rack. But rare-earth magnets do not indicate their polarity. So, once you have glued the magnet to the first rack, use it as an indicator (once the glue has set!): let the next magnet you glue first attach to the glued magnet, add a drop of glue to the slot where it is going to go, and place it there in the required orientation as indicated in the schematic:
+> ![magnet_orientation](../docs/img/magnet_orientation.png)
 
 ## Slider
 
@@ -199,8 +193,10 @@ Like the lid. Print as well a stencil, which can be a bit more relaxed (0.2 mm).
 
 ### Post-printing modifications
 
-Using the stencil, use the cutter or a scalpel to cut a piece of neoprene rubber around it. Make sure the cross openings for cutting the cuspid valves have the wider side facing upwards. Press firmly against the rubber with the stencil and cut deeply and slowly - if you stretch the rubber while cutting, the final shape will not match well the outline carved in the depositor. Once the perimeter has been cut, without moving the stencil, make cross cuts in all the indicated places to align the cuspid valves with the holes in the depositor. Use a stack of old paper or soft wood as a base so you can cut through without damaging the working surface.
+Using the <a href="https://github.com/jdenavascues/Drosben/blob/main/hardware/3D_models/Utilities/Depositor_stencil.stl" target="_blank">stencil</a> , use a cutter or a scalpel to cut a piece of neoprene rubber around it. Make sure the cross openings for cutting the cuspid valves have the wider side facing upwards. Press firmly against the rubber with the stencil and cut deeply and slowly - if you stretch the rubber while cutting, the final shape will not match well the outline carved in the depositor. Once the perimeter has been cut, without moving the stencil, make cross cuts in all the indicated places to align the cuspid valves with the holes in the depositor. Use a stack of old paper or soft wood as a base so you can cut through without damaging the working surface.
 
 Run the cyanoacrylate glue gel bottle nozzle along the surface of the well for the rubber mat (bottom side, the opposite one to the rails), and press the rubber mat against it. Put some weight on it and leave to cure.
 
 Add nails like to the lid.
+
+

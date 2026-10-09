@@ -177,8 +177,9 @@ Check that the tubes are flush with each other on the open side. If the are not,
 
 Glue two N52 disk magnets 10 x 3 mm to each round hole at the front of the multiflipper and the lids. Simply add a drop of cyanoacrylate glue gel to the slot for the magnet and place an N52 neodymium disk magnet (12 x 3 mm) there.
 
-> [!IMPORTANT TIP]
-> You will want **all** your racks to have their magnets in the **same orientation**, so all your lids are compatible with any rack. But rare-earth magnets do not indicate their polarity. So, once you have glued the magnet to the first rack, use it as an indicator (once the glue has set!): let the next magnet you glue first attach to the glued magnet, add a drop of glue to the slot where it is going to go, and place it there in the required orientation as indicated in the schematic:
+> [!TIP]
+>
+> **IMPORTANT:** You will want **all** your racks to have their magnets in the **same orientation**, so all your lids are compatible with any rack. But rare-earth magnets do not indicate their polarity. So, once you have glued the magnet to the first rack, use it as an indicator (once the glue has set!): let the next magnet you glue first attach to the glued magnet, add a drop of glue to the slot where it is going to go, and place it there in the required orientation as indicated in the schematic:
 > ![magnet_orientation](../docs/img/magnet_orientation.png)
 
 ## Slider

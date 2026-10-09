@@ -1,6 +1,6 @@
 [![DOI](https://zenodo.org/badge/1271162077.svg)](https://doi.org/10.5281/zenodo.20999933)
 
-![deathbed](./img/fly_deathbed.png)
+![deathbed](./docs/img/fly_deathbed.png)
 
 # Drosben: a method for scaling up lifespan analysis of _Drosophila_
 
@@ -31,7 +31,7 @@ The Drosben system comprises:
 - _'Experiment initialization'_ to record experimental design details and produce experiment-specific data recording sheets (done once per experiment);
 - _'Data compilation/analysis'_ to capture the data from scanned datasheets (done once at the end of an experiment, but can also be done along the way to monitor progress).
 
-![Overview of the Drosben system: preparation and usage](./img/overview_drosben.png)
+![Overview of the Drosben system: preparation and usage](./overview_drosben.png)
 
 ---
 
@@ -47,7 +47,7 @@ The Drosben hardware components are:
 - The depositor for distributing the flies initially into the vials,
 - The multiflipper and its slider, for transferring the flies from a rack into another one with fresh vials.
 
-![components of Drosben hardware](./img/components.png)
+![components of Drosben hardware](./docs/img/components.png)
 
 
 ## 1.B. Required equipment and materials  
@@ -80,11 +80,11 @@ The Drosben hardware is used in three steps.
 
 First, print and cut the rack labels for your experiment and place each in the slot of a rack, so you can see experimental conditions. Place the corresponding flies in each of the tubes using a pooter, with the distributor covering the tubes. The rubber valves of the distributor (see the [hardware README](../hardware/README.md)) prevent flies from escaping. Quickly swap the distributor by a lid, where instead of valves, slits allow breathing. Both snap in place thanks to the rare-earth magnets and two rigid push-click spots. This starts the experiment. If you want to record the data blind to the experimental conditions, flip now each rack label so it is the QR side that shows.
 
-![step1](./img/usage1.png)
+![step1](./docs/img/usage1.png)
 
 Next, and every time flies need passaging into vials with fresh food, swap the lid by the multiflipper, flip the assemble and gently tap the flies into the multiflipper chambres; cover them with the slider, which will be held in place by magnets (see the [hardware README](../hardware/README.md)). Set the rack with old tubes aside for recording deaths and place a new one on top of the multiflipper. Remove the slider, flipe the assemble and tap the flies into the new tubes. Swap the multiflipper and the lid and place the tubes in the incubator.
 
-![step2](./img/usage2.png)
+![step2](./docs/img/usage2.png)
 
 Finally, every time you passage the flies, identify the datasheet corresponding to the rack you are passaging. Explicit datasheets will have the rack no. and the experiment 'name' and conditions in the header. For blind recording, read the QR code with the phone and match the reading with the last 5 characters of the experiment ID. Then, on the next available grid on the datasheet, record:
 - days since last flip,
@@ -93,7 +93,7 @@ Finally, every time you passage the flies, identify the datasheet corresponding 
 - carried-overs (dead flies that fall into the fresh vials).
 When the experiment is finished (or you want to inspect the data), scan the datasheets and use the software.
 
-![step3](./img/usage3.png)
+![step3](./docs/img/usage3.png)
 
 ---
 

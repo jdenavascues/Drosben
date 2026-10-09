@@ -92,7 +92,7 @@ Our latest prints were printed in a Bambulab A1 mini with plain PLA after slicin
 
 The rack is the only model with <a href="https://github.com/jdenavascues/Drosben/blob/main/hardware/3D_models/Rack/Rack.stl" target="_blank">very thin areas</a>, where the tubes almost touch and in the sleeve to hold the label. We have not managed to print both faithfully - it seems to be either one or the other:
 
-![thin_areas_rack](../img/thin_areas_rack.png)
+![thin_areas_rack](../docs/img/thin_areas_rack.png)
 
 In our experience, hosting the tubes firmly does not need the full cylinder slot - the curved triangles are enough to keep the tubes secured. So we favour printing racks with functional sleeves, for which those settings work well.
 
@@ -102,7 +102,7 @@ Simply add a drop of cyanoacrylate glue gel to the slot for the magnet and place
 
 > [!TIP]
 > You will want **all** your racks to have their magnets in the **same orientation**, so all your lids are compatible with any rack. But rare-earth magnets do not indicate their polarity. So, once you have glued the magnet to the first rack, use it as an indicator (once the glue has set!): let the next magnet you glue first attach to the glued magnet, add a drop of glue to the slot where it is going to go, and place it there in the required orientation as indicated in the schematic:
-> ![magnet_orientation](../img/magnet_orientation.png)
+> ![magnet_orientation](../docs/img/magnet_orientation.png)
 
 ## Building the Lids
 
@@ -136,7 +136,7 @@ This step assumes you already have 12 acrylic tubes of 25 mm external diameter, 
 
 Using a Pasteur pipette, a metal rod or a syringe, run a generous drop of acrylic cement along both sides of the touching tangent of each tube pair. Let them dry for 24 hours.
 
-![gluing_tube_array](../img/gluing_tube_array.png)
+![gluing_tube_array](../docs/img/gluing_tube_array.png)
 
 #### 2. Gluing the mesh to the chambers
 
@@ -146,17 +146,17 @@ Once the glue has cured, use the cutter or a scalpel to cut the mesh along the o
 
 Check that the tubes are flush with each other on the open side. If the are not, sand the excess until they are, with care so the surface does not tilt.
 
-![gluing_mesh](../img/gluing_mesh.png)
+![gluing_mesh](../docs/img/gluing_mesh.png)
 
 #### 4. Gluing the chambers to the multiflipper base
 
 Use the slider as a stencil to cut out a silicone rubber mat piece of the same projected shape. Insert the slider and the silicone cutout into the slot of the multiflipper base, with the silicone mat towards the top of the base. Place the group on a rack with tubes, so the rubber can be pushed against the top (ceiling) of the multiflipper base.
 
-![mounted_multiflipper_base](../img/mounted_multiflipper_base.png)
+![mounted_multiflipper_base](../docs/img/mounted_multiflipper_base.png)
 
 Then run the cyanoacrylate glue bottle nozzle along the internal edge of the top side of the multiflipper (where the tubes will be glued to) and place the tube array there, supported by the slider (which is covered by the silicone mat so it does not become glued.
 
-![gluing_multiflipper_chambers](../img/gluing_multiflipper_chambers.png)
+![gluing_multiflipper_chambers](../docs/img/gluing_multiflipper_chambers.png)
 
 #### 5. Gluing the magnets
 
@@ -174,7 +174,7 @@ To cut the tubes yourself safely and with reasonably good results, you can use o
 
 We added minor modifications so the clamp works with rubber bands and it includes sliding bars (15 cm rods, 3 mm diameter) with a stopper and a M4 bolt to stabilise the length for repeated cutting:
 
-![tube_cutter_annotated](../img/tube_cutter_annotated.png)
+![tube_cutter_annotated](../docs/img/tube_cutter_annotated.png)
 
 You will need a pipe cutter and an arc saw, as shown in M.S. Idris' video.
 

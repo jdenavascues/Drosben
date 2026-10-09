@@ -46,6 +46,7 @@ conda_build/
 !tests/data/datasheet_scans/*
 !tests/data/*
 !docs/img/*
+!docs/files/* 
 
 # Editor
 # --------------------------

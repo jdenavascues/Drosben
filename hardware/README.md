@@ -130,9 +130,32 @@ Our latest prints were printed in a Bambulab A1 mini with plain PLA after slicin
 
 ### Post-printing modifications
 
-#### 1. Gluing the chambers
+#### Obtaining the tubes for the chambers
 
-This step assumes you already have 12 acrylic tubes of 25 mm external diameter, 2 mm thick, 70-100 mm long ([see #5](#5.-Cutting-your-own-tubes)). Arrange the tubes in the same 4 x 3 honeycomb configuration as the rack and multiflipper, and hold them using rubber bands. Make sure they are **all flush with each other**.
+The easiest way to obtain these is purchasing long tube at a local workshop or online retailer and ask them to cut them down for you. They typically offer cutouts starting at 100 mm in length, with a fee per cut. This is convenient and gets you cuts of the best quality. However, there are advantages to cutting your own tubes: you can make tubes shorter (100 mm makes a bulky, heavy multiflipper), and it saves money in cuts and total tube length. The cuts will not be so clean, though.
+
+You can cut your tubes with a mitre or table saw, but doing this safely and without notching the tubes requires more than basic DIY skill so we will not cover it here. If you think you can do it, you probably do not need our help.
+
+To cut the tubes yourself safely and with reasonably good results, you can use our [_tube cutter with reference_ model](./3D_models/Utilities/tube_cutter_reference.stl) (printed  with _0.12 mm High Quality_ presets and support enabled). This tool was copied from a design by YouTube user M.S. Idris, who shows how to use it here:
+
+[![cutting_tubes_yourself](http://img.youtube.com/vi/mZk1wDfr2mY/0.jpg)](http://www.youtube.com/watch?v=mZk1wDfr2mY "Good quality cuts of acrylic tubing with an arc saw")
+
+We added minor modifications so the clamp works with rubber bands (faster than bolts) and it includes stainless steel sliding bars (15 cm rods, 3 mm diameter) with a stopper and a M4 bolt to fix the length for repeated cutting:
+
+![tube_cutter_annotated](../docs/img/tube_cutter_annotated.png)
+
+You will need a pipe cutter to score the tube, as shown in M.S. Idris' video. Cutting can be done with an arc saw, a tenon saw or a dozuki saw (Japanese woodworking pull saw).
+
+#### Gluing multiflipper frame, chambers and mesh
+
+Let us assume now that you already have 12 acrylic tubes of 25 mm external diameter, 2 mm thick, 70-100 mm long. You 
+
+![sequence](../docs/img/thin_areas_rack.png)
+
+
+
+
+([see #5](#5.-Cutting-your-own-tubes)). Arrange the tubes in the same 4 x 3 honeycomb configuration as the rack and multiflipper, and hold them using rubber bands. Make sure they are **all flush with each other**.
 
 Using a Pasteur pipette, a metal rod or a syringe, run a generous drop of acrylic cement along both sides of the touching tangent of each tube pair. Let them dry for 24 hours.
 
@@ -161,22 +184,6 @@ Then run the cyanoacrylate glue bottle nozzle along the internal edge of the top
 #### 4. Gluing the magnets
 
 Glue two N52 disk magnets 10 x 3 mm to each round hole at the front of the multiflipper.
-
-#### 5. Cutting your own tubes
-
-Online retailers typically offer cuts off a long tube starting at 100 mm in length. This is convenient and gets you cuts of the best quality, though the resulting chambers are a little bit too long. There are advantages to cutting your own tubes: first, you save money directly, as every cut adds to the price (the shop needs to amortise the blades!); second, if you cut your own tubes, you can make them shorter, which saves you a bit more money (you are paying by length) and makes the multiflipper lighter, more ergonomic and easier to handle.
-
-You can cut your tubes with a mitre or table saw, but doing this safely and without notching the tubes requires more than basic DIY skill so we will not cover it here. If you think you can do it, you probably do not need our help.
-
-To cut the tubes yourself safely and with reasonably good results, you can use our [_tube cutter with reference_ model](./3D_models/Utilities/tube_cutter_reference.stl) (printed  with _0.12 mm High Quality_ presets and support enabled). This tool was copied from a design by YouTube user M.S. Idris, who shows how to use it here:
-
-[![cutting_tubes_yourself](http://img.youtube.com/vi/mZk1wDfr2mY/0.jpg)](http://www.youtube.com/watch?v=mZk1wDfr2mY "Good quality cuts of acrylic tubing with an arc saw")
-
-We added minor modifications so the clamp works with rubber bands (faster than bolts) and it includes stainless steel sliding bars (15 cm rods, 3 mm diameter) with a stopper and a M4 bolt to fix the length for repeated cutting:
-
-![tube_cutter_annotated](../docs/img/tube_cutter_annotated.png)
-
-You will need a pipe cutter to score the tube, as shown in M.S. Idris' video. Cutting can be done with an arc saw, a tenon saw or a dozuki saw (Japanese woodworking pull saw).
 
 ## Slider
 

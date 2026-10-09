@@ -8001,7 +8001,7 @@ a.anchor-link {
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
-<embed height="800px" src="https://github.com/jdenavascues/Drosben/blob/main/notebooks/ColourCalReport_2026-10-09_19-23-35.pdf" type="application/pdf" width="100%"/>
+<embed height="800px" src="https://github.com/jdenavascues/Drosben/blob/main/notebooks/ColourCalReport_2026-10-09_19-43-04.pdf" type="application/pdf" width="100%"/>
 </div>
 </div>
 </div>
@@ -8045,7 +8045,7 @@ a.anchor-link {
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
-<embed height="800px" src="https://github.com/jdenavascues/Drosben/blob/main/notebooks/ColourCalReport_2026-10-09_19-23-36.pdf" type="application/pdf" width="100%"/>
+<embed height="800px" src="https://github.com/jdenavascues/Drosben/blob/main/notebooks/ColourCalReport_2026-10-09_19-43-05.pdf" type="application/pdf" width="100%"/>
 </div>
 </div>
 </div>
@@ -8089,34 +8089,36 @@ a.anchor-link {
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
-<span class="ansi-cyan-fg">Cell</span><span class="ansi-cyan-fg"> </span><span class="ansi-green-fg">In[4]</span><span class="ansi-green-fg">, line 4</span>
-<span class="ansi-green-fg">      1</span> <span style="color: rgb(95,135,135)"># INTERACTIVE</span>
-<span class="ansi-green-fg">      2</span> <span style="color: rgb(95,135,135)"># run this code block without altering it or jump to "COMMAND-LINE"</span>
-<span class="ansi-green-fg">      3</span> home = <span style="color: rgb(0,135,0)">str</span>(Path.cwd() / <span class="ansi-yellow-fg">'</span><span class="ansi-yellow-fg">../tests/data</span><span class="ansi-yellow-fg">'</span>) 
-<span class="ansi-green-fg">----&gt; </span><span class="ansi-green-fg">4</span> fc = <span class="ansi-yellow-bg">FileChooser</span>(<span class="ansi-yellow-fg">f</span><span class="ansi-yellow-fg">'</span><span class="ansi-bold" style="color: rgb(175,95,135)">{</span>home<span class="ansi-bold" style="color: rgb(175,95,135)">}</span><span class="ansi-yellow-fg">/</span><span class="ansi-yellow-fg">'</span>)
-<span class="ansi-green-fg">      5</span> fc.filter_pattern = [<span class="ansi-yellow-fg">'</span><span class="ansi-yellow-fg">*.tif</span><span class="ansi-yellow-fg">'</span>, <span class="ansi-yellow-fg">'</span><span class="ansi-yellow-fg">*.tiff</span><span class="ansi-yellow-fg">'</span>, <span class="ansi-yellow-fg">'</span><span class="ansi-yellow-fg">*.png</span><span class="ansi-yellow-fg">'</span>, <span class="ansi-yellow-fg">'</span><span class="ansi-yellow-fg">*.jpg</span><span class="ansi-yellow-fg">'</span>, <span class="ansi-yellow-fg">'</span><span class="ansi-yellow-fg">*.jpeg</span><span class="ansi-yellow-fg">'</span>, <span class="ansi-yellow-fg">'</span><span class="ansi-yellow-fg">*.pdf</span><span class="ansi-yellow-fg">'</span>]
-<span class="ansi-green-fg">      6</span> fc.title = <span class="ansi-yellow-fg">'</span><span class="ansi-yellow-fg">&lt;b&gt;Select your Colour Calibration scan&lt;/b&gt; (single clicks)</span><span class="ansi-yellow-fg">'</span>
-
-<span class="ansi-red-fg">NameError</span>: name 'FileChooser' is not defined</pre>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>FileChooser(path='/Users/JQ/Documents/__REPOS/GitHub/Drosben/tests/data', filename='', title='&lt;b&gt;Select your C…</pre>
 </div>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=b0ea72c7-de23-4b17-80c9-3c1217e968ec">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=b0ea72c7-de23-4b17-80c9-3c1217e968ec">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [5]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">imgpath</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">fc</span><span class="o">.</span><span class="n">selected</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"/"</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">fc</span><span class="o">.</span><span class="n">selected</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"/"</span><span class="p">)[</span><span class="o">-</span><span class="mi">3</span><span class="p">:]))</span>
 </pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>tests/data/scan_RGB_Xerox.pdf
+</pre>
 </div>
 </div>
 </div>
@@ -8132,12 +8134,12 @@ a.anchor-link {
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=7d0de792-ef31-4fe3-9d31-3e6f0878e557">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=7d0de792-ef31-4fe3-9d31-3e6f0878e557">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [6]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># COMMAND-LINE</span>
@@ -8147,6 +8149,20 @@ a.anchor-link {
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'This path IS </span><span class="si">{</span><span class="s2">""</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">imgpath_cli</span><span class="o">.</span><span class="n">is_file</span><span class="p">()</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s2">"NOT "</span><span class="si">}</span><span class="s1">a local file:'</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"/"</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">imgpath_cli</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"/"</span><span class="p">)[</span><span class="o">-</span><span class="mi">3</span><span class="p">:]))</span>
 </pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>This path IS NOT a local file:
+path/to/colour_calibration_scan
+</pre>
 </div>
 </div>
 </div>
@@ -8163,12 +8179,12 @@ a.anchor-link {
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=8e4c1773-d18d-478b-821c-eef9e26c65ff">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=8e4c1773-d18d-478b-821c-eef9e26c65ff">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [7]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">usedpath</span> <span class="o">=</span> <span class="n">imgpath_cli</span> <span class="k">if</span> <span class="n">imgpath_cli</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span> <span class="k">else</span> <span class="n">imgpath</span>
@@ -8177,6 +8193,27 @@ a.anchor-link {
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'</span><span class="se">\n</span><span class="s1">Report for colour calibration scan file: </span><span class="si">{</span><span class="n">usedpath</span><span class="si">}</span><span class="se">\n</span><span class="s1">'</span><span class="p">)</span>
 <span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="sa">f</span><span class="s1">'&lt;embed src=</span><span class="si">{</span><span class="n">reportpath</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1"> width="100%" height="800px" type="application/pdf"&gt;'</span><span class="p">))</span>
 </pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>
+Report for colour calibration scan file: /Users/JQ/Documents/__REPOS/GitHub/Drosben/tests/data/scan_RGB_Xerox.pdf
+
+</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<embed height="800px" src="https://github.com/jdenavascues/Drosben/blob/main/notebooks/ColourCalReport_2026-10-09_19-43-30.pdf" type="application/pdf" width="100%"/>
 </div>
 </div>
 </div>

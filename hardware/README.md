@@ -1,8 +1,10 @@
 # Instructions to assemble the Drosben components
 
 > [!CAUTION]
+> 
 > Assembling the hardware brings chemical and mechanical hazards.
 > We give recommendations but you follow them **at your own risk**.
+> 
 > **THIS IS NOT A RISK ASSESSMENT**. Some precautions are mentioned, but you **must** do your own risk assessment.
 
 You will need:

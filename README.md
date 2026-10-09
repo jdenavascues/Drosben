@@ -31,7 +31,7 @@ The Drosben system comprises:
 - _'Experiment initialization'_ to record experimental design details and produce experiment-specific data recording sheets (done once per experiment);
 - _'Data compilation/analysis'_ to capture the data from scanned datasheets (done once at the end of an experiment, but can also be done along the way to monitor progress).
 
-![Overview of the Drosben system: preparation and usage](./overview_drosben.png)
+![Overview of the Drosben system: preparation and usage](./docs/img/overview_drosben.png)
 
 ---
 
@@ -52,13 +52,13 @@ The Drosben hardware components are:
 
 ## 1.B. Required equipment and materials  
 
-See the [hardware README](../hardware/README.md) for the model files for 3D printing and some details on their assembly/preparation for usage.
+See the [hardware README](hardware/README.md) for the model files for 3D printing and some details on their assembly/preparation for usage.
 
 + **A 3D printer** capable of printing 1.75 mm PLA or ABS filament. We have printed the necessary parts successfully in a [Prusa i3 MK3S+](https://www.prusa3d.com/product/original-prusa-i3-mk3s-10th-anniversary-edition-3d-printer/) and a [Bambulab A1 mini](https://bambulab.com/en/a1-mini). Alternatively, you can send the files to a printer shop.
 
 + **Slicing software** for your 3D printer. We have used Cura Ultimaker and Bambulab Studio.
 
-+ **Clear acrylic tube** with 25 mm outer diameter and 2 mm thickness (23 mm ID). These can be bought cut to measure from local or online retailers, or bought by the metre and take to a workshop for cutting. A cheaper alternative is to buy a long piece and cut it down yourself (see the [hardware README](../hardware/README.md)).
++ **Clear acrylic tube** with 25 mm outer diameter and 2 mm thickness (23 mm ID). These can be bought cut to measure from local or online retailers, or bought by the metre and take to a workshop for cutting. A cheaper alternative is to buy a long piece and cut it down yourself (see the [hardware README](hardware/README.md)).
 
 + **Stainless steel or plastic thin mesh**; those described for insect netting would work and are relatively cheap. A piece of ~15 x 20 cm will be enough for a single Multiflipper.
 
@@ -78,11 +78,11 @@ See the [hardware README](../hardware/README.md) for the model files for 3D prin
 
 The Drosben hardware is used in three steps.
 
-First, print and cut the rack labels for your experiment and place each in the slot of a rack, so you can see experimental conditions. Place the corresponding flies in each of the tubes using a pooter, with the distributor covering the tubes. The rubber valves of the distributor (see the [hardware README](../hardware/README.md)) prevent flies from escaping. Quickly swap the distributor by a lid, where instead of valves, slits allow breathing. Both snap in place thanks to the rare-earth magnets and two rigid push-click spots. This starts the experiment. If you want to record the data blind to the experimental conditions, flip now each rack label so it is the QR side that shows.
+First, print and cut the rack labels for your experiment and place each in the slot of a rack, so you can see experimental conditions. Place the corresponding flies in each of the tubes using a pooter, with the distributor covering the tubes. The rubber valves of the distributor (see the [hardware README](hardware/README.md)) prevent flies from escaping. Quickly swap the distributor by a lid, where instead of valves, slits allow breathing. Both snap in place thanks to the rare-earth magnets and two rigid push-click spots. This starts the experiment. If you want to record the data blind to the experimental conditions, flip now each rack label so it is the QR side that shows.
 
 ![step1](./docs/img/usage1.png)
 
-Next, and every time flies need passaging into vials with fresh food, swap the lid by the multiflipper, flip the assemble and gently tap the flies into the multiflipper chambres; cover them with the slider, which will be held in place by magnets (see the [hardware README](../hardware/README.md)). Set the rack with old tubes aside for recording deaths and place a new one on top of the multiflipper. Remove the slider, flipe the assemble and tap the flies into the new tubes. Swap the multiflipper and the lid and place the tubes in the incubator.
+Next, and every time flies need passaging into vials with fresh food, swap the lid by the multiflipper, flip the assemble and gently tap the flies into the multiflipper chambres; cover them with the slider, which will be held in place by magnets (see the [hardware README](hardware/README.md)). Set the rack with old tubes aside for recording deaths and place a new one on top of the multiflipper. Remove the slider, flipe the assemble and tap the flies into the new tubes. Swap the multiflipper and the lid and place the tubes in the incubator.
 
 ![step2](./docs/img/usage2.png)
 

@@ -114,7 +114,7 @@ Apart from the hardware components, you will also need:
 
 ### Installation with _no previous experience_ in programming
 
-If you have _any_ experience programming in Python, you probably can jump to the [next section](#with-some-programming-experience). If you do not have Python or '(ana)conda' installed in your system (or do not know if you do), this section is meant for you.
+If you have _any_ experience programming in Python, you probably can jump to the [next section](#installation-with-any-programming-experience). If you do not have Python or '(ana)conda' installed in your system (or do not know if you do), this section is meant for you.
 
 We are not experienced programmers, so neither our software nor its installer have polished user interfaces. However, they are simple enough and the steps are very constrained. Just bear in mind that instead of clicking and dragging-and-dropping, you will have to type in some simple commands, which we have tried to minimise and explain step by step.
 
@@ -207,14 +207,15 @@ Once JupyterLab is active, navigate interactively to the `drosben/notebooks/` di
 ## 2.B. Usage and data analysis
 
 The easiest way to use the software is to run the Jupyter notebooks in order:
-+ [Colour test template](src/drosben/resources/colour_cal_printout.pdf): Print, fill and scan this template start Notebook #01 (see notebook for detailed instructions).
-+ [Notebook #01](/notebooks/01_First_Use_Colour_Calibration.ipynb): Validate the pen markers to ensure the three colours will be discriminated without human supervision. This needs be done only once, unless you change the colours.
-+ [Excel template](src/drosben/resources/experiment_template.xlsx): Before you start an experiment, fill in the experimental details in an Excel template file.
-+ [Notebook #02](/notebooks/02_Initialize_Experiment.ipynb): Read the experiment metadata from the Excel template and generate
+- [Colour test template](src/drosben/resources/colour_cal_printout.pdf): Print, fill and scan this template start Notebook #01 (see notebook for detailed instructions).
+- [Notebook #01](/notebooks/01_First_Use_Colour_Calibration.ipynb): Validate the pen markers to ensure the three colours will be discriminated without human supervision. This needs be done only once, unless you change the colours.
+- [Excel template](src/drosben/resources/experiment_template.xlsx): Before you start an experiment, fill in the experimental details in an Excel template file.
+- [Notebook #02](/notebooks/02_Perform_Experiment.ipynb): Read the experiment metadata from the Excel template and generate
     - experiment-specific data recording sheets. These can be anonymous for blind data collection, if desired, and
     - Labels for each of the racks used for the experiment racks (both anonymous or identified).
     - This only needs be run once per experiment.
-+ [Notebook #03](/notebooks/03_Read_DataSheets_Analyse_Data.ipynb): Compile the observations recorded in scanned datasheets and run an automated preliminary analysis of the data. This can be done all at once at the end of the experiment or incrementally, in multiple rounds along the way.
+- [Notebook #03](/notebooks/03_Read_DataSheets.ipynb): Compile the observations recorded in scanned datasheets and run an automated preliminary analysis of the data. This can be done all at once at the end of the experiment or incrementally, in multiple rounds along the way.
+- Then move to an R environment (e.g. RStudio) for [Notebook #04](/notebooks/04_Analyse_Data.Rmd)
 
 Recommendations for scanning datasheets and colour calibration sheets:
 - Scan the papers at ≥150 dpi

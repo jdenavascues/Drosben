@@ -214,7 +214,7 @@ strata_labels <- function(fit, delim = ' | ', subs = NULL) {
 We are not statisticians, so the analyses illustrated here are not very
 sophisticated. However, you should be somewhat familiar with:
 
-- [Kaplan-Meier](https://rmvpaeme.github.io/KaplanMeier_intro/) [(KM) plots](pmc.ncbi.nlm.nih.gov/articles/PMC5045282/pdf/jadp-07-091.pdf)
+- [Kaplan-Meier](https://rmvpaeme.github.io/KaplanMeier_intro/) [(KM) plots](https://pmc.ncbi.nlm.nih.gov/articles/PMC5045282/pdf/jadp-07-091.pdf)
 
 - [Cox-proportional hazards (CPH) modelling](http://www.sthda.com/english/wiki/cox-proportional-hazards-model)
 

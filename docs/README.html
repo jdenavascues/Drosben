@@ -19,7 +19,6 @@ pre code { padding: 0; }
 table { border-collapse: collapse; margin: 1em 0; }
 th, td { border: 1px solid var(--line); padding: .3em .6em; }
 nav.top { font-size: .9em; margin-bottom: 1em; }
-.toc { background: #fafafa; border: 1px solid var(--line); padding: .5em 1em; border-radius: 4px; }
 ol.steps > li { margin-bottom: .4em; }
 .sub { color: var(--muted); font-size: .92em; }
 </style>
@@ -32,7 +31,7 @@ window.MathJax = { tex: { inlineMath: [['$$','$$'], ['\\(','\\)']] } };
 <nav class="top"><a href="index.html">&larr; Drosben manual</a></nav>
 <main>
 <p><a href="https://doi.org/10.5281/zenodo.20999933"><img alt="DOI" src="https://zenodo.org/badge/1271162077.svg" /></a></p>
-<p><img alt="deathbed" src="docs/img/fly_deathbed.png" /></p>
+<p><img alt="deathbed" src="img/fly_deathbed.png" /></p>
 <h1 id="drosben-a-method-for-scaling-up-lifespan-analysis-of-drosophila">Drosben: a method for scaling up lifespan analysis of <em>Drosophila</em></h1>
 <p><em>Drosophila melanogaster</em> is a powerful model organism to study ageing, or any other processes where lifespan is a useful life history trait, because the fly lends itself to large demographic studies to measure survival time and mortality rates. However, performing these experiments is time-consuming, as they require many manual passages of fly vials to keep them on fresh food and record events. </p>
 <p>We have developed a toolkit that allows transferring flies from 12 tubes into fresh ones ('flipping') simultaneosly, which we have named <em>Drosben</em> (a portmanteau of <em>Drosophila</em> and <em>trosben</em>, Welsh for sommersault). Drosben comprises both hardware (which can be made cheaply with 3D printing and minimal DIY modifications) and software (a simple python module with notebooks for usage). One speeds the manual labour, and the other one speeds the data recording -- producing a quick preliminary analysis and a spreadsheet ready to be analysed in a more targeted way in R with the package <code>survival</code>.</p>
@@ -55,7 +54,7 @@ window.MathJax = { tex: { inlineMath: [['$$','$$'], ['\\(','\\)']] } };
 <li><em>'Experiment initialization'</em> to record experimental design details and produce experiment-specific data recording sheets (done once per experiment);</li>
 <li><em>'Data compilation/analysis'</em> to capture the data from scanned datasheets (done once at the end of an experiment, but can also be done along the way to monitor progress).</li>
 </ul>
-<p><img alt="Overview of the Drosben system: preparation and usage" src="./overview_drosben.png" /></p>
+<p><img alt="Overview of the Drosben system: preparation and usage" src="img/overview_drosben.png" /></p>
 <hr />
 <h1 id="1-the-drosben-hardware">1. The Drosben hardware</h1>
 <p>The hardware components are designed to improve handling speed of vials during fly transfer to fresh food.</p>
@@ -64,7 +63,7 @@ window.MathJax = { tex: { inlineMath: [['$$','$$'], ['\\(','\\)']] } };
 - The rack and lid that houses 12 <em>Drosophila</em> vials,
 - The depositor for distributing the flies initially into the vials,
 - The multiflipper and its slider, for transferring the flies from a rack into another one with fresh vials.</p>
-<p><img alt="components of Drosben hardware" src="docs/img/components.png" /></p>
+<p><img alt="components of Drosben hardware" src="img/components.png" /></p>
 <h2 id="1b-required-equipment-and-materials">1.B. Required equipment and materials</h2>
 <p>See the <a href="hardware_README.html">hardware README</a> for the model files for 3D printing and some details on their assembly/preparation for usage.</p>
 <ul>
@@ -99,16 +98,16 @@ The fumes from the cyanoacrylate may leave a frost mark on the acrylic tubes; to
 <h2 id="1c-hardware-usage">1.C. Hardware usage</h2>
 <p>The Drosben hardware is used in three steps.</p>
 <p>First, print and cut the rack labels for your experiment and place each in the slot of a rack, so you can see experimental conditions. Place the corresponding flies in each of the tubes using a pooter, with the distributor covering the tubes. The rubber valves of the distributor (see the <a href="hardware_README.html">hardware README</a>) prevent flies from escaping. Quickly swap the distributor by a lid, where instead of valves, slits allow breathing. Both snap in place thanks to the rare-earth magnets and two rigid push-click spots. This starts the experiment. If you want to record the data blind to the experimental conditions, flip now each rack label so it is the QR side that shows.</p>
-<p><img alt="step1" src="docs/img/usage1.png" /></p>
+<p><img alt="step1" src="img/usage1.png" /></p>
 <p>Next, and every time flies need passaging into vials with fresh food, swap the lid by the multiflipper, flip the assemble and gently tap the flies into the multiflipper chambres; cover them with the slider, which will be held in place by magnets (see the <a href="hardware_README.html">hardware README</a>). Set the rack with old tubes aside for recording deaths and place a new one on top of the multiflipper. Remove the slider, flipe the assemble and tap the flies into the new tubes. Swap the multiflipper and the lid and place the tubes in the incubator.</p>
-<p><img alt="step2" src="docs/img/usage2.png" /></p>
+<p><img alt="step2" src="img/usage2.png" /></p>
 <p>Finally, every time you passage the flies, identify the datasheet corresponding to the rack you are passaging. Explicit datasheets will have the rack no. and the experiment 'name' and conditions in the header. For blind recording, read the QR code with the phone and match the reading with the last 5 characters of the experiment ID. Then, on the next available grid on the datasheet, record:
 - days since last flip,
 - deaths (matching the dead flies stuck to the bottom of the tubes),
 - censorings (escaped flies or flies stuck alive to the bottom of the tubes), and
 - carried-overs (dead flies that fall into the fresh vials).
 When the experiment is finished (or you want to inspect the data), scan the datasheets and use the software.</p>
-<p><img alt="step3" src="docs/img/usage3.png" /></p>
+<p><img alt="step3" src="img/usage3.png" /></p>
 <hr />
 <h1 id="2-the-drosben-software">2. The Drosben software</h1>
 <p>We wrote a python package to speed up the data collection, both when recording fly deaths and when compiling the observations in electronic form. It takes advantage of the shape of the tubes as held in the rack, so the user at the bench can quickly record deaths as pen marks on a printed template; then these can easily be scanned, automatically detected with computer vision, and compiled into a spreadsheet for analysis. So, while the hardware can be used without the software, this is not the case the other way around; however, the drosben system is more effective when both hardware and software are used together.</p>
@@ -124,7 +123,7 @@ When the experiment is finished (or you want to inspect the data), scan the data
 </blockquote>
 <h2 id="2a-installation-and-start">2.A. Installation and start</h2>
 <h3 id="installation-with-no-previous-experience-in-programming">Installation with <em>no previous experience</em> in programming</h3>
-<p>If you have <em>any</em> experience programming in Python, you probably can jump to the <a href="#with-some-programming-experience">next section</a>. If you do not have Python or '(ana)conda' installed in your system (or do not know if you do), this section is meant for you.</p>
+<p>If you have <em>any</em> experience programming in Python, you probably can jump to the <a href="#installation-with-any-programming-experience">next section</a>. If you do not have Python or '(ana)conda' installed in your system (or do not know if you do), this section is meant for you.</p>
 <p>We are not experienced programmers, so neither our software nor its installer have polished user interfaces. However, they are simple enough and the steps are very constrained. Just bear in mind that instead of clicking and dragging-and-dropping, you will have to type in some simple commands, which we have tried to minimise and explain step by step.</p>
 <p>We have written the drosben software in the Python language, using a few specific Python libraries (specialised extensions of the language). For our software to work, specific versions of both Python and the libraries need to be installed together; this is called an 'environment' (for some beginner explanations, see <a href="https://realpython.com/python-virtual-environments-a-primer/">here</a>, <a href="https://www.w3schools.com/python/python_virtualenv.asp">here</a> or <a href="https://www.anaconda.com/blog/anaconda-python-complete-beginners-guide">here</a>.</p>
 <p>Once you have the environment set up, you can open in it a 'working environment', JupyterLab, from where to open and run the so-called 'ipython notebooks' - a sort of live documents where you can mix formatted text (which we use to give you instructions) and snippets of code (which will work as the buttons and check boxes of a polished user interface). You can find basic explanations of what Jupyter Notebooks are and what they look like <a href="https://www.datatoinsight.org/jupyter-notebooks">here</a> and <a href="https://www.datatoinsight.org/jupyter-notebooks">here</a>; for a bit more information look <a href="https://www.datatoinsight.org/jupyter-notebooks">here</a> (shortcuts and hotkeys) or <a href="https://www.dataquest.io/blog/jupyter-notebook-tutorial/">here</a> (with basic exercises); for a video tutorial, I suggest you look <a href="https://www.youtube.com/watch?v=Ou-7G9VQugg">here</a>. All these will give you more than you need, as we will only ask you to:
@@ -194,14 +193,15 @@ jupyter<span style="color: #BBB"> </span>lab
 <hr />
 <h2 id="2b-usage-and-data-analysis">2.B. Usage and data analysis</h2>
 <p>The easiest way to use the software is to run the Jupyter notebooks in order:
-+ <a href="https://github.com/jdenavascues/Drosben/blob/main/src/drosben/resources/colour_cal_printout.pdf">Colour test template</a>: Print, fill and scan this template start Notebook #01 (see notebook for detailed instructions).
-+ <a href="01_First_Use_Colour_Calibration.html">Notebook #01</a>: Validate the pen markers to ensure the three colours will be discriminated without human supervision. This needs be done only once, unless you change the colours.
-+ <a href="https://github.com/jdenavascues/Drosben/blob/main/src/drosben/resources/experiment_template.xlsx">Excel template</a>: Before you start an experiment, fill in the experimental details in an Excel template file.
-+ <a href="/notebooks/02_Initialize_Experiment.ipynb">Notebook #02</a>: Read the experiment metadata from the Excel template and generate
+- <a href="https://github.com/jdenavascues/Drosben/blob/main/src/drosben/resources/colour_cal_printout.pdf">Colour test template</a>: Print, fill and scan this template start Notebook #01 (see notebook for detailed instructions).
+- <a href="01_First_Use_Colour_Calibration.html">Notebook #01</a>: Validate the pen markers to ensure the three colours will be discriminated without human supervision. This needs be done only once, unless you change the colours.
+- <a href="https://github.com/jdenavascues/Drosben/blob/main/src/drosben/resources/experiment_template.xlsx">Excel template</a>: Before you start an experiment, fill in the experimental details in an Excel template file.
+- <a href="02_Perform_Experiment.html">Notebook #02</a>: Read the experiment metadata from the Excel template and generate
     - experiment-specific data recording sheets. These can be anonymous for blind data collection, if desired, and
     - Labels for each of the racks used for the experiment racks (both anonymous or identified).
     - This only needs be run once per experiment.
-+ <a href="/notebooks/03_Read_DataSheets_Analyse_Data.ipynb">Notebook #03</a>: Compile the observations recorded in scanned datasheets and run an automated preliminary analysis of the data. This can be done all at once at the end of the experiment or incrementally, in multiple rounds along the way.</p>
+- <a href="03_Read_DataSheets.html">Notebook #03</a>: Compile the observations recorded in scanned datasheets and run an automated preliminary analysis of the data. This can be done all at once at the end of the experiment or incrementally, in multiple rounds along the way.
+- Then move to an R environment (e.g. RStudio) for <a href="04_Analyse_Data.html">Notebook #04</a></p>
 <p>Recommendations for scanning datasheets and colour calibration sheets:
 - Scan the papers at ≥150 dpi
 - Save in TIFF/JPEG/PNG/PDF format

@@ -90,7 +90,7 @@ Our latest prints were printed in a Bambulab A1 mini with plain PLA after slicin
 - preset configuration _0.08 mm High Quality_;
 - support enabled (with support default settings).
 
-The rack is the only model with <a href="https://github.com/jdenavascues/Drosben/blob/main/hardware/3D_models/Rack/Rack.stl", target="blank">very thin areas</a>], where the tubes almost touch and in the sleeve to hold the label. We have not managed to print both faithfully - it seems to be either one or the other:
+The rack is the only model with <a href="https://github.com/jdenavascues/Drosben/blob/main/hardware/3D_models/Rack/Rack.stl" target="blank">very thin areas</a>, where the tubes almost touch and in the sleeve to hold the label. We have not managed to print both faithfully - it seems to be either one or the other:
 
 ![thin_areas_rack](../img/thin_areas_rack.png)
 

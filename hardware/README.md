@@ -147,7 +147,7 @@ We added minor modifications so the clamp works with rubber bands (faster than b
 
 ![tube_cutter_annotated](../docs/img/tube_cutter.png)
 
-You will need a pipe cutter to score the tube, as shown in M.S. Idris' video. Cutting can be done with an arc saw, a tenon saw or a dozuki saw (Japanese woodworking pull saw).
+To assemble the tube cutter, you just need to glue 2 stainless steel rods of ~15 cm long and 3 mm diameter to the stopper (magenta arrowheads above), and add an M4 bolt to the side hole (lower green arrowead). You then adjust the stopper with a sample tube and fix its position with the bolt. Note the stencil for the depositer (higher green arrowhead) is used to stop the tube from retracting as you push the stopper against the tube). Once the stopper is in place, just slide the long tube from the other side, clamp it with rubber bands, and cut. You may want to use a pipe cutter to score the tube, as shown in M.S. Idris' video, to get a better quality cut. Cutting can be done with an arc saw, a tenon saw or a dozuki saw (Japanese woodworking pull saw).
 
 #### Gluing multiflipper frame, chambers and mesh
 
@@ -193,6 +193,8 @@ Glue one nail into the hole at the tip, with the same precautions as in the rail
 ### Printing
 
 Like the lid. Print as well a stencil, which can be a bit more relaxed (0.2 mm).
+
+![stencil](../docs/img/stencil.png)
 
 ### Post-printing modifications
 
